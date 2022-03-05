@@ -1,0 +1,45 @@
+      program test
+c
+      use surf_comms
+c
+      implicit real(8) (a-h,o-z)
+c
+      call binomial
+c
+      write(*,*)
+      do j=0,9
+         write(*,104)j,(bc(mx,j),mx=0,9)
+      enddo
+c
+      write(*,*)
+      do j=1,10
+         write(*,104)j,(bc(j-1,mx-1),mx=1,10)
+      enddo
+c
+C
+C      SET UP PASCAL TRIANGLE OF BINARY COEFFICIENTS IN BC.
+C
+      write(*,*)
+      lck=9
+      DO 15 I=0,LCK
+      DO 15 J=0,LCK
+  15  BC(I,J)=0.D0
+C
+      DO 19 I=1,LCK
+  19  BC(I,1)=1.D0
+C
+      L=1
+      DO 17 J=2,LCK
+      K=J-1
+      DO 18 I=J,LCK
+      BC(I,J)=BC(K,J)+BC(K,L)
+  18  K=I
+  17  L=J
+c
+      write(*,*)
+      do j=0,9
+         write(*,104)j,(bc(mx,j),mx=0,9)
+      enddo
+c
+104   format(i4,': ',12f12.1)
+      end

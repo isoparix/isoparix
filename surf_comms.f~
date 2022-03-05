@@ -1,0 +1,8 @@
+      module surf_comms
+c
+      real(8),dimension(0:9,0:9,0:9) :: coeff 
+      real(8),dimension(0:28,0:28)   :: bc 
+c
+      integer ixmax,iymax,izmax
+c
+      end
