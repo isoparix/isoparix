@@ -1,4 +1,4 @@
-      real (8) function slope(x1,y1,x2,y2)
+      real (4) function slope(x1,y1,x2,y2)
 c
 c      Returns slope between these two points
 c
@@ -9,7 +9,11 @@ c
      *  )then
              slope=(y1-y2)/(x1-x2)
          else
-             slope=huge(slope)
+c            slope=huge(slope)
+             slope=1.0
       endif
 c
+c     write(0,100)x1,y1,x2,y2,slope
+c
+100   FORMAT('SLOPE:',24x,5e14.5)
       end

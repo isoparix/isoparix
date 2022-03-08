@@ -80,18 +80,16 @@ c
                    nq(5)=nq(1)
 c
                    do i=1,5
-                      write(0,801)i,nca,xc(nq(i),nca),yc(nq(i),nca)
-801   format(2i6,2e14.7)                      
+c                     write(0,801)i,nca,xc(nq(i),nca),yc(nq(i),nca)
                       xa(i)=xc(nq(i),nca)
                       ya(i)=yc(nq(i),nca)
                    enddo
 c
                    do i=1,4
-                       write(0,800)i,xa(i),ya(i),xa(i+1),ya(i+1)
+c                      write(0,800)i,xa(i),ya(i),xa(i+1),ya(i+1)
                        cepta(i)= cept(xa(i),ya(i),xa(i+1),ya(i+1))
                       slopea(i)=slope(xa(i),ya(i),xa(i+1),ya(i+1))
                    enddo
-800   format('HIDREM call to CEPT:',i10,4e14.5)                   
 c
                    xf=ivx(nq(1),nca)	! We only use correct
                    yf=ivy(nq(1),nca)	! one of these 
@@ -137,6 +135,9 @@ c
                                     ceptb= cept(xb(n),  yb(n)
      *                                         ,xb(n+1),yb(n+1))
                                    do k=1,4
+c     write(0,802)n,k,slopeb,ceptb,slopea(k),cepta(k),xb(n),yb(n)
+c    *                                              ,xb(n+1),yb(n+1c
+c    *                                              ,ya(k),ya(k+1)
                                       if(intersector(slopeb,   ceptb
      *                                              ,slopea(k),cepta(k)
      *                                              ,yb(n),yb(n+1)
@@ -239,6 +240,9 @@ c     call flush(32)
 c
       return
 c
+800   format('HIDREM call to CEPT:',i10,4e14.5)                   
+801   format(2i6,2e14.7)                      
+802   format('Pre-INTERSECTOR:    ',2i5,10e14.5)                   
 100   format(/'There are',i5,' active cubes in the list'
      *      /,'   Entry    Cube  Process',100(/3i8))
 101   format('Next nearest point in the triple is',i3)

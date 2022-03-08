@@ -26,6 +26,17 @@ c
               endif
       endif
 c
+      if(nx*ny.lt.nslaves-2   ! N(processes) -Master -Artist
+     *  )then
+             if(nx.lt.ny)nx=nx+1
+         else
+             if(ny.le.nx)ny=ny+1
+      endif 
+c      
+      write(0,100)ixm,iym,nslaves,nx,ny
+100   format('SIDE_CALC: IXM=',i0.0,', IYM=',i0.0,', NSLAVES=',i0.0
+     *,', NX=',i0.0,', NY=',i0.0)      
+c
       return
 c
       end

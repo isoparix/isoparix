@@ -27,7 +27,7 @@ c
 c      Issue a blocking call to check mouse or keyboard
 c
       call x11mouse(nbut,kxcursor,kycursor,ixresize,iyresize)
-      if(nbut.ne.-994)write(0,101)nbut
+      if(nbut.ne.-994.and.check)write(0,101)nbut
       if(nbut.eq.69)return  ! F3 pressed
       if(nbut.gt.0.and.nbut.le.3    !  For mouse input
      *   .or.

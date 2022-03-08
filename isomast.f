@@ -307,11 +307,11 @@ c              write(     *,125)(line_detail(mx),mx=ndet+6,ndet+1,-1)
 c
 c      Create work-lines for initial perimeter calculations
 c
-               ip=-1
-               if(ix1.eq.1.or.ix1.eq.ixm)ip=ix1
-               if(ix2.eq.1.or.ix2.eq.ixm)ip=ix2
-               if(ip.gt.0
-     *           )then
+               do ipx=ix1,ix2,ix2-ix1
+                  ip=-1
+                  if(ipx.eq.1.or.ipx.eq.ixm)ip=ipx
+                  if(ip.gt.0
+     *              )then
 c
 c      Set up a 'column' workload
 c
@@ -333,7 +333,7 @@ c
                               itbis(2)=iy1
                               itbis(3)=ip
                               itbis(4)=iy2
-                              itbis(5)=miniter
+                              itbis(5)=0
                               call MPI_send(itbis,5,MPI_INTEGER4,artist
      *                                     ,msglow+11,icomm,ierror)
                               if(check
@@ -341,14 +341,15 @@ c
                                      write(txtout,147)ip,iy1,iy2
                                      call statout
                               endif
-                       endif
-               endif
+                          endif
+                  endif
+               enddo
 c
-               ip=-1
-               if(iy1.eq.1.or.iy1.eq.iym)ip=iy1
-               if(iy2.eq.1.or.iy2.eq.iym)ip=iy2
-               if(ip.gt.0
-     *           )then
+               do ipy=iy1,iy2,iy2-iy1
+                  ip=-1
+                  if(ipy.eq.1.or.ipy.eq.iym)ip=ipy
+                  if(ip.gt.0
+     *               )then
 c
 c      Set up a 'liner' workload
 c
@@ -370,7 +371,7 @@ c
                               itbis(2)=ip
                               itbis(3)=ix2
                               itbis(4)=ip
-                              itbis(5)=miniter
+                              itbis(5)=0
                               call MPI_send(itbis,5,MPI_INTEGER4,artist
      *                                     ,msglow+11,icomm,ierror)
                               if(check
@@ -378,10 +379,21 @@ c
                                      write(txtout,148)ip,ix1,ix2
                                      call statout
                               endif
-                       endif
+                          endif
+                  endif
+               enddo   
+c               
+               if(check
+     *           )then
+                      write(txtout,300)j,ny
+                      call statout
                endif
-c
          enddo
+         if(check
+     *     )then
+                write(txtout,300)i,nx
+                call statout
+         endif
       enddo
 300   format('Loop',i6,' of NY=',i6,' completed')
 301   format('Loop',i6,' of NX=',i6,' completed')
@@ -849,7 +861,7 @@ c
       if(swc.gt.0)then
 c
 c        We have an idle slave and spare work.   Send out work as
-c        ix1, iy1, ix2, iy2, miniter, source, perimeter data (if any)
+c        ix1, iy1, ix2, iy2, minperi, source, perimeter data (if any)
 c
          if(ndet.eq.ndetwork)then
 c
