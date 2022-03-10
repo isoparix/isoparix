@@ -147,7 +147,7 @@ c
 c
       character (60) hostname
       character (3) data_source		!top for topview, ios for iostat
-      character (len=150) infomsg
+      character (len=200) infomsg
       character (len=94) oldtitle,tmptitle
       character (len=35) title_header
       character (len=8000) disk_activity

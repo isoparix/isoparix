@@ -28,7 +28,7 @@ c
       integer (4) ncolcalc
 c
       real (8) tt,twork,tend,x,ts,t,td,tistart,tiend
-     *        ,xcen,ycen,deltay,cra,cia
+     *        ,xcen,ycen,deltay,cra,cia,dx,dy,simin,srmin
 c
       msgcount_in=0
       msgcount_out=0
@@ -221,6 +221,10 @@ c
 c
 c      Get the parameters
 c
+              simin  =params( 1)
+              srmin  =params( 2)
+              dx     =params( 3)
+              dy     =params( 4)
               iym    =params( 5)+.5
               ixm    =params( 6)+.5
               limit  =params( 7)+.5
@@ -728,7 +732,7 @@ c                      yoffset=yoffset*ar
                     enddo
              endif
 c
-      call system('sleep 1')
+c     call system('sleep 1')
 c
 c      Build equal-area colour maps and draw the final pictures!
 c
@@ -806,7 +810,7 @@ c                                write(0,*)mx,(x_prim(i,my),my=1,7)
                    endif
                 enddo
                 call x11flush()
-                call system('sleep 1')
+c               call system('sleep 1')
              enddo
       endif
 c
@@ -1026,12 +1030,7 @@ c
 c
 c      Select the next point by the mouse
 c
-                    infomsg=
-     *              'Choose next picture - Mouse button or keyboard '//
-     *              'number: 1 Zoom in;'//
-     *              ' 2 Mandelbrot<->Julia; 3 Back out.     F3 to end.'
-                    call x11title(%ref(infomsg))
-                    call picker(nbut,kxcen,kycen,kdy)
+                    call picker(nbut,kxcen,kycen,kdy,dx,dy,simin,srmin)
                 else
                     nbut=-999	!No screen graphics, no autocycle
               endif
@@ -1040,7 +1039,7 @@ c
 c 3   continue
 c
 c      nbut=-10 : Exposed
-c      nbut=-11 : Resized
+c      nbut=-10 : Resized
 c      nbut=  1 : Button 1
 c      nbut=  2 : Button 2
 c      nbut=  3 : Button 3
@@ -1055,7 +1054,6 @@ c
              newdata(4)=ixm
              newdata(5)=iym
              newdata(6)=kdy
-c            if(nbut.eq.-11
              if(nbut.eq.-10
      *         )then
 c

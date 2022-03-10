@@ -557,7 +557,7 @@ c
                 return
           endif
 c
-         if(newdata(1).eq.-11
+         if(newdata(1).eq.-10
      *     )then
 c
 c      The window has been resized.  Draw different size at same resltn

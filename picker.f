@@ -1,11 +1,15 @@
-      subroutine picker(nbut,kxcen,kycen,kdy)
+      subroutine picker(nbut,kxcen,kycen,kdy,dx,dy,simin,srmin)
 c
 c      Gets the results of pressing buttons, selecting new pic
 c
       use isocomm
 c
-      logical resize
+      real(8)xcen_box,ycen_box,delta_box,tres,deltay,dx,dy,simin,srmin
 c
+      logical resize,newposition
+c
+      character (len=200) selection_message
+c           
 c      Initialise box on screen
 c
       resize=.false.
@@ -47,7 +51,7 @@ c
              go to 2
       endif
 c
-      if(nbut.eq.-11
+      if(nbut.eq.-10
      *  )then
 c
 c      Window has been resized, so record details
@@ -63,37 +67,41 @@ c
              kdy=2*idy
              if(resize
      *         )then
-                    nbut=-11
+                    nbut=-10
                     kxcen=kxcursor
                     kycen=kycursor
-c                   write(*,100)ixm,iym,kxcen,kycen,idy
+                    write(0,100)ixm,iym,kxcen,kycen,idy
              endif
 c            return
       endif
 c
       kd=0
+      newposition=.false.
 c
 c      ***** Box size change *****
 c
       if(nbut.eq.60)kd= 1   ! >
       if(nbut.eq.59)kd=-1   ! <
+      if(kd.ne.0)newposition=.true.
 c
 c      Enlarge or shrink box
 c
       idy=idy+kd
       if(idy.lt.2)idy=2
       idx=.5+(real(idy*ixm)/real(iym))
+
 c
 c      ***** Box translation *****
 c
-      if(nbut.eq.104.or.nbut.eq.88)kxcen=kxcen-1  !   Down arrows
-      if(nbut.eq. 98.or.nbut.eq.80)kxcen=kxcen+1  !   Up
-      if(nbut.eq.100.or.nbut.eq.83)kycen=kycen-1  !   Left
-      if(nbut.eq.102.or.nbut.eq.85)kycen=kycen+1  !   Right
+      if(nbut.eq.104.or.nbut.eq.88)kycen=kycen+1  !   Down arrows
+      if(nbut.eq. 98.or.nbut.eq.80)kycen=kycen-1  !   Up
+      if(nbut.eq.100.or.nbut.eq.83)kxcen=kxcen-1  !   Left
+      if(nbut.eq.102.or.nbut.eq.85)kxcen=kxcen+1  !   Right
       if(nbut.eq.-994
      *  )then
              kxcen=kxcursor
              kycen=kycursor
+             newposition=.true.
       endif
 c
 c      Wipe out old box...
@@ -107,9 +115,26 @@ c
       call x11box(%val(kxcen-idx),%val(kycen-idy)
      *           ,%val(kxcen+idx),%val(kycen+idy))
 c
+      if(newposition
+     *  )then
+             xcen_box=srmin+(dx*dfloat(kxcen))
+             ycen_box=simin+(dy*dfloat(iym-kycen))
+             delta_box=dy*dfloat(2*idy)
+c     write(0,*)ixm,iym,deltay,kxcen,kycen,2*idy
+c    *         ,xcen_box,ycen_box,delta_box
+c
+             write(selection_message,102)kxcen,kycen,2*idy,xcen_box
+     *                                  ,ycen_box,delta_box
+             call x11title(%ref(selection_message))
+             newposition=.false.
+      endif
+c      
       go to 1
 c
 100   format('PICKER - Resized to ',2i8,'. Centre at',2i8,'. IDY=',i8)
 101   format('PICKER - button pressed was ',i5)
-c
+102   format('Choose next picture - Mouse button or keyboard ',
+     *       'number: 1 Zoom in; 2 Mandelbrot<->Julia; 3 Back out.',
+     *       ' F3 to end.',
+     *  3i6,2e26.17,e12.4)
       end

@@ -179,6 +179,7 @@ c
              write(     0,109)iter,ix1,iy1,ix2,iy2,kcpels,nupels
              write(lchann,109)iter,ix1,iy1,ix2,iy2,kcpels,nupels
              call isoflush(lchann)
+             iso_mpi_term=.true.
              return
       endif
 c

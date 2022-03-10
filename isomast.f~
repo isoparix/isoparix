@@ -18,7 +18,7 @@ c
       logical mandel
       dimension summdet(0:511,5),newdata(6)
 c
-      ldiff=3
+      ldiff=5
 c
 c      Typical data file....
 c
@@ -67,7 +67,7 @@ c
       ixmold=ixm
       iymold=iym
 c
-      ngrf=len_grafout
+      ngrf=len_ngrafout
       minperi=0
       xcen1  =xcen
       ycen1  =ycen
@@ -307,11 +307,11 @@ c              write(     *,125)(line_detail(mx),mx=ndet+6,ndet+1,-1)
 c
 c      Create work-lines for initial perimeter calculations
 c
-               ip=-1
-               if(ix1.eq.1.or.ix1.eq.ixm)ip=ix1
-               if(ix2.eq.1.or.ix2.eq.ixm)ip=ix2
-               if(ip.gt.0
-     *           )then
+               do ipx=ix1,ix2,ix2-ix1
+                  ip=-1
+                  if(ipx.eq.1.or.ipx.eq.ixm)ip=ipx
+                  if(ip.gt.0
+     *              )then
 c
 c      Set up a 'column' workload
 c
@@ -333,7 +333,7 @@ c
                               itbis(2)=iy1
                               itbis(3)=ip
                               itbis(4)=iy2
-                              itbis(5)=miniter
+                              itbis(5)=0
                               call MPI_send(itbis,5,MPI_INTEGER4,artist
      *                                     ,msglow+11,icomm,ierror)
                               if(check
@@ -341,14 +341,15 @@ c
                                      write(txtout,147)ip,iy1,iy2
                                      call statout
                               endif
-                       endif
-               endif
+                          endif
+                  endif
+               enddo
 c
-               ip=-1
-               if(iy1.eq.1.or.iy1.eq.iym)ip=iy1
-               if(iy2.eq.1.or.iy2.eq.iym)ip=iy2
-               if(ip.gt.0
-     *           )then
+               do ipy=iy1,iy2,iy2-iy1
+                  ip=-1
+                  if(ipy.eq.1.or.ipy.eq.iym)ip=ipy
+                  if(ip.gt.0
+     *               )then
 c
 c      Set up a 'liner' workload
 c
@@ -370,7 +371,7 @@ c
                               itbis(2)=ip
                               itbis(3)=ix2
                               itbis(4)=ip
-                              itbis(5)=miniter
+                              itbis(5)=0
                               call MPI_send(itbis,5,MPI_INTEGER4,artist
      *                                     ,msglow+11,icomm,ierror)
                               if(check
@@ -378,11 +379,24 @@ c
                                      write(txtout,148)ip,ix1,ix2
                                      call statout
                               endif
-                       endif
+                          endif
+                  endif
+               enddo   
+c               
+               if(check
+     *           )then
+                      write(txtout,300)j,ny
+                      call statout
                endif
-c
          enddo
+         if(check
+     *     )then
+                write(txtout,300)i,nx
+                call statout
+         endif
       enddo
+300   format('Loop',i6,' of NY=',i6,' completed')
+301   format('Loop',i6,' of NX=',i6,' completed')
 c
       ndet=nperi
 c
@@ -565,7 +579,7 @@ c
                 deltay=deltay1
          endif
 c
-         if(newdata(1).eq.1
+         if(newdata(1).eq.1.or.newdata(1).eq.10
      *     )then
 c
 c      Button1 has been pressed - 
@@ -599,7 +613,7 @@ c
                  endif 
          endif
 c
-         if(newdata(1).eq.3
+         if(newdata(1).eq.3.or.newdata(1).eq.12
      *     )then
 c
 c      Button3 has been pressed - zoom out.
@@ -607,7 +621,7 @@ c
                 deltay=10.*deltay
          endif
 c
-         if(newdata(1).eq.2
+         if(newdata(1).eq.2.or.newdata(1).eq.11
      *     )then
 c
 c      Button2 has been pressed - change from Mandelbrot to Julia.
@@ -847,7 +861,7 @@ c
       if(swc.gt.0)then
 c
 c        We have an idle slave and spare work.   Send out work as
-c        ix1, iy1, ix2, iy2, miniter, source, perimeter data (if any)
+c        ix1, iy1, ix2, iy2, minperi, source, perimeter data (if any)
 c
          if(ndet.eq.ndetwork)then
 c
@@ -983,30 +997,35 @@ c
 c      Error handling and program halt...
 c
 900   continue
+      write(0,*)'Error reading data file'
       txtout='Error reading data file'
       call statout
       iso_mpi_term=.true.
       return
 c
 901   continue
+      write(0,*)'Premature end of data file'
       txtout='Premature end of data file'
       call statout
       iso_mpi_term=.true.
       return
 c
 902   continue
+      write(0,*)'Error reading picture file'
       txtout='Error reading picture file'
       call statout
       iso_mpi_term=.true.
       return
 c
 903   continue
+      write(0,*)'Premature end of picture file'
       txtout='Premature end of picture file'
       call statout
       iso_mpi_term=.true.
       return
 c
 904   continue
+      write(0,*)'Problem opening window       '
       txtout='Problem opening window       '
       call statout
       iso_mpi_term=.true.
