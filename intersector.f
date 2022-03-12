@@ -7,6 +7,8 @@ c
 c     y=( cept(x3,y3,x4,y4)- cept(x1,y1,x2,y2))
 c    * /(slope(x1,y1,x2,y2)-slope(x3,y3,x4,y4))
 c
+      implicit real(8) (a-h,o-z)
+c
       if(slope12.eq.slope34
      *  )then
 c

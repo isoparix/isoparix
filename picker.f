@@ -31,7 +31,7 @@ c
 c      Issue a blocking call to check mouse or keyboard
 c
       call x11mouse(nbut,kxcursor,kycursor,ixresize,iyresize)
-      if(nbut.ne.-994.and.check)write(0,101)nbut
+c     if(nbut.ne.-994.and.check)write(0,101)nbut
       if(nbut.eq.69)return  ! F3 pressed
       if(nbut.gt.0.and.nbut.le.3    !  For mouse input
      *   .or.
@@ -93,15 +93,35 @@ c
 c
 c      ***** Box translation *****
 c
-      if(nbut.eq.104.or.nbut.eq.88)kycen=kycen+1  !   Down arrows
-      if(nbut.eq. 98.or.nbut.eq.80)kycen=kycen-1  !   Up
-      if(nbut.eq.100.or.nbut.eq.83)kxcen=kxcen-1  !   Left
-      if(nbut.eq.102.or.nbut.eq.85)kxcen=kxcen+1  !   Right
+      if(nbut.eq.104.or.nbut.eq.88
+     *  )then
+             newposition=.true.
+             kycen=kycen+1  !   Down arrows
+      endif
+c
+      if(nbut.eq. 98.or.nbut.eq.80
+     *  )then
+             newposition=.true.
+             kycen=kycen-1  !   Up
+      endif
+c
+      if(nbut.eq.100.or.nbut.eq.83
+     *  )then
+             newposition=.true.
+             kxcen=kxcen-1  !   Left
+      endif
+c
+      if(nbut.eq.102.or.nbut.eq.85
+     *  )then
+             newposition=.true.
+             kxcen=kxcen+1  !   Right
+      endif
+c
       if(nbut.eq.-994
      *  )then
+             newposition=.true.
              kxcen=kxcursor
              kycen=kycursor
-             newposition=.true.
       endif
 c
 c      Wipe out old box...
@@ -126,6 +146,8 @@ c
              write(selection_message,102)kxcen,kycen,2*idy,xcen_box
      *                                  ,ycen_box,delta_box
              call x11title(%ref(selection_message))
+             kxcursor=kxcen
+             kycursor=kycen
              newposition=.false.
       endif
 c      
@@ -133,7 +155,7 @@ c
 c
 100   format('PICKER - Resized to ',2i8,'. Centre at',2i8,'. IDY=',i8)
 101   format('PICKER - button pressed was ',i5)
-102   format('Choose next picture - Mouse button or keyboard ',
+102   format('Next picture - Mouse button or keyboard ',
      *       'number: 1 Zoom in; 2 Mandelbrot<->Julia; 3 Back out.',
      *       ' F3 to end.',
      *  3i6,2e26.17,e12.4)

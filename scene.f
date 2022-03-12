@@ -1,6 +1,7 @@
       subroutine scene
 c
       use isocomm
+      implicit real(8)(a-h,o-z)
 c
       ixcmax=0
       ixcmin=1000000

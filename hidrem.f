@@ -4,14 +4,15 @@ c      Who covers what? If cmasks is true, then the second
 c      element of cmasks is covered by the first.
 c
       use isocomm
+      implicit real(8) (a-h,o-z)
 c
       logical visibility,tvis,hider,quickwin
 c
       character (1) fx
       character (15) covres
       dimension listtmp(20)
-      real(4),dimension(5) :: xa,ya,xb,yb,cepta,slopea
-      real(4)ceptb,slopeb
+      real(8),dimension(5) :: xa,ya,xb,yb,cepta,slopea
+      real(8)ceptb,slopeb
       integer(4),dimension(5) :: nq
 c
       logical clash,q_inter,q_visi,intersector
@@ -136,7 +137,7 @@ c
      *                                         ,xb(n+1),yb(n+1))
                                    do k=1,4
 c     write(0,802)n,k,slopeb,ceptb,slopea(k),cepta(k),xb(n),yb(n)
-c    *                                              ,xb(n+1),yb(n+1c
+c    *                                              ,xb(n+1),yb(n+1)
 c    *                                              ,ya(k),ya(k+1)
                                       if(intersector(slopeb,   ceptb
      *                                              ,slopea(k),cepta(k)

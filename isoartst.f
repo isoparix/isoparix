@@ -124,7 +124,7 @@ c     ntag  =MPI_ANY_TAG
      *  )then
              call lts(nbytes)
          else
-             call microsleep(1000000)
+c            call microsleep(1000000)
              nwait=nwait+1
              go to 1
       endif
@@ -1046,7 +1046,7 @@ c      nbut=  3 : Button 3
 c
 c      End of user interaction
 c
-                    write(*,120)nbut,kxcen,kycen,ixm,iym,kdy
+c                   write(*,120)nbut,kxcen,kycen,ixm,iym,kdy
              ntotpels=0
              newdata(1)=nbut
              newdata(2)=kxcen

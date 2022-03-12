@@ -1,8 +1,8 @@
-      real (4) function cept(x1,y1,x2,y2)
+      real (8) function cept(x1,y1,x2,y2)
 c
 c      Returns intercept of line between these two points
 c
-      real(4)x1,y1,x2,y2
+      real(8)x1,y1,x2,y2
 c
       if(x1.ne.x2
      *  )then

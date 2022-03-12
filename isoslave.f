@@ -7,7 +7,7 @@ c
       use isocomm
       use parcomm
 c
-      real (8) twork,tworkrec,tidle,tend
+      real (8) twork,tworkrec,tidle,tend,tstart
      *        ,srmin,simin,cra,cia,dx,dy
 c
       integer (4) :: gtemp(20)

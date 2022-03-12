@@ -26,11 +26,14 @@ c
               endif
       endif
 c
-      if(nx*ny.lt.nslaves-2   ! N(processes) -Master -Artist
+      if(nx*ny.lt.nslaves   ! N(processes) -Master -Artist
      *  )then
-             if(nx.lt.ny)nx=nx+1
-         else
-             if(ny.le.nx)ny=ny+1
+             if(nx.lt.ny
+     *        )then
+                   nx=nx+1
+               else
+                   ny=ny+1
+             endif 
       endif 
 c      
       write(0,100)ixm,iym,nslaves,nx,ny

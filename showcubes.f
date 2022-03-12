@@ -5,9 +5,9 @@ c
       use isocomm
       use bmp_comms
 c
-      logical movie 
+      implicit real(8) (a-h,o-z)
 c
-      real(8) told,tnew
+      logical movie 
 c
       check=. true.
       lchann=10
@@ -73,14 +73,14 @@ c
 c
       diag_delta=.01*diagonal
 c
-      call cubeadd(1, ixm/8,-iym/2, ixm/2,-iym/8,10)
-      call cubeadd(2, ixm/8, iym/8, ixm/2, iym/2,40)
-      call cubeadd(3,-ixm/2,-iym/2,-ixm/3,-iym/3,70)
-      call cubeadd(4,-ixm/2, iym/4,-7*ixm/16, iym/3,20)
-      call cubeadd(5,-ixm/10,      1,     0,iym/10,20)
-      call cubeadd(6,-ixm/10,-iym/10,     0,     0,40)
-      call cubeadd(7,      1,-iym/10,ixm/10,     0,60)
-      call cubeadd(8,      1,      1,ixm/10,iym/10,80)
+      call cubeadd(1,   ixm/8,-iym/2,    ixm/2, -iym/8,10)
+      call cubeadd(2,  ixm/8,  iym/8,    ixm/2,  iym/2,40)
+      call cubeadd(3, -ixm/2, -iym/2,   -ixm/3, -iym/3,70)
+      call cubeadd(4, -ixm/2,  iym/4,-7*ixm/16,  iym/3,20)
+      call cubeadd(5,-ixm/10,      1,        0, iym/10,20)
+      call cubeadd(6,-ixm/10,-iym/10,        0,      0,40)
+      call cubeadd(7,      1,-iym/10,   ixm/10,      0,60)
+      call cubeadd(8,      1,      1,   ixm/10, iym/10,80)
 c
 c     ibatch=100
       ibatch=100
