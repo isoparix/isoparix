@@ -64,9 +64,9 @@ c
              if(ixm.ne.ixmp-1.or.iym.ne.iymp-1)return
       endif
 c
-c     if(nbut.gt.-800
-c    *  )then
-c            kdy=2*idy
+      if(nbut.gt.-800
+     *  )then
+             kdy=2*idy
 c            if(resize
 c    *         )then
 c                   nbut=-10
@@ -74,7 +74,7 @@ c                   kxcen=kxcorner
 c                   kycen=kycorner
 c                   write(0,100)ixm,iym,kxcen,kycen,idy
 c            endif
-c     endif
+      endif
 c
       kd=0
       newposition=.false.
