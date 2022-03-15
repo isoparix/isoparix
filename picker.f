@@ -1,4 +1,5 @@
-      subroutine picker(nbut,kxcen,kycen,kdy,dx,dy,simin,srmin)
+      subroutine picker(nbut,kxcen,kycen,ixmp,iymp,kdy,dx,dy
+     *                 ,simin,srmin)
 c
 c      Gets the results of pressing buttons, selecting new pic
 c
@@ -12,13 +13,13 @@ c
 c           
 c      Initialise box on screen
 c
-      resize=.false.
       idy=.5+(.05*dfloat(iym))
       idx=.5+(dfloat(idy)*dfloat(ixm)/dfloat(iym))
       kxcen=ixm/2
       kycen=iym/2
       call x11box(%val(kxcen-idx),%val(kycen-idy)
      *           ,%val(kxcen+idx),%val(kycen+idy))
+      nresize=0
   1   continue
       kd=0
       kxold=kxcen
@@ -30,9 +31,11 @@ c
 c
 c      Issue a blocking call to check mouse or keyboard
 c
-      call x11mouse(nbut,kxcursor,kycursor,ixresize,iyresize)
-c     if(nbut.ne.-994.and.check)write(0,101)nbut
+      call x11mouse(nbut,kxcorner,kycorner,ixmp,iymp)
+      if(nbut.ne.-994.and.nbut.ne.-999.and.check)write(0,101)
+     *nbut,kxcorner,kycorner,ixmp,iymp,nresize
       if(nbut.eq.69)return  ! F3 pressed
+      if(nbut.eq.36)nbut=1  ! Enter key proceeds to next picture
       if(nbut.gt.0.and.nbut.le.3    !  For mouse input
      *   .or.
      *   nbut.ge.10.and.nbut.le.12  !  For keyboard input
@@ -43,37 +46,35 @@ c
              return
       endif
 c
-      if(nbut.eq.-10
-     *  )then
+c     if(nbut.eq.-10
+c    *  )then
 c
 c      Window has been exposed, so refresh it..
 c
-             go to 2
-      endif
+c            go to 2
+c     endif
 c
-      if(nbut.eq.-10
+      if(nbut.eq.-12
      *  )then
 c
 c      Window has been resized, so record details
 c
-             ixm=ixresize
-             iym=iyresize
-             resize=.true.
-             go to 2
+             kxcen=kxold
+             kycen=kyold
+             if(ixm.ne.ixmp-1.or.iym.ne.iymp-1)return
       endif
 c
-      if(nbut.gt.-800
-     *  )then
-             kdy=2*idy
-             if(resize
-     *         )then
-                    nbut=-10
-                    kxcen=kxcursor
-                    kycen=kycursor
-                    write(0,100)ixm,iym,kxcen,kycen,idy
-             endif
-c            return
-      endif
+c     if(nbut.gt.-800
+c    *  )then
+c            kdy=2*idy
+c            if(resize
+c    *         )then
+c                   nbut=-10
+c                   kxcen=kxcorner
+c                   kycen=kycorner
+c                   write(0,100)ixm,iym,kxcen,kycen,idy
+c            endif
+c     endif
 c
       kd=0
       newposition=.false.
@@ -120,8 +121,8 @@ c
       if(nbut.eq.-994
      *  )then
              newposition=.true.
-             kxcen=kxcursor
-             kycen=kycursor
+             kxcen=kxcorner
+             kycen=kycorner
       endif
 c
 c      Wipe out old box...
@@ -153,8 +154,11 @@ c
 c      
       go to 1
 c
-100   format('PICKER - Resized to ',2i8,'. Centre at',2i8,'. IDY=',i8)
-101   format('PICKER - button pressed was ',i5)
+100   format('PICKER - Box resized to ',2i8,'. Centre at',2i8
+     *      ,'. IDY=',i8)
+101   format('PICKER - NBUT:',i5
+     *      ,', KXCORNER:',i5,', KYCORNER:',i5
+     *      ,', IXMP:',i5,', IYMP:',i5,', NRESIZE:',i4)
 102   format('Next picture - Mouse button or keyboard ',
      *       'number: 1 Zoom in; 2 Mandelbrot<->Julia; 3 Back out.',
      *       ' F3 to end.',

@@ -42,7 +42,7 @@ c
 c
       real(4),dimension(4) :: slopexz,slopexy,slopewy
 c
-      real(4),dimension(max_line_vertices,maxcubes) :: xc,yc
+      real(8),dimension(max_line_vertices,maxcubes) :: xc,yc
       integer,dimension(max_line_vertices,maxcubes) :: 
      *                                    ixc,iyc,ivx,ivy,ivz
      *                                   ,lvx,lvy,lvz,lvv,lvj

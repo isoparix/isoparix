@@ -19,6 +19,7 @@ c
       dimension summdet(0:511,5),newdata(6)
 c
       ldiff=5
+      role='Master'
 c
 c      Typical data file....
 c
@@ -95,8 +96,6 @@ c
 c
 c      Discover things about the Parallel Environment
 c
-      role='Master'
-c
 c      Tell the Artist who is the Master
 c
       ntag=msglow+13
@@ -171,6 +170,8 @@ c
          slavreq (i)=0 
       enddo
 c
+c  These next four lines define the on-screen picture
+c
       dy=deltay/dfloat(iym-1)
       dx=dy
       simin=ycen-(.5_8*deltay)
@@ -226,7 +227,7 @@ c        if(itask.ne.taskid.and.itask.ne.artist)then !!JSW 31JUL16
             nbtotm=nbtotm+320
 c
             if(check)then
-                         write(txtout,108)itask,MPI_REAL8,ntag,ierror
+                         write(txtout,108)itask,ntag,ierror
                          call statout
             endif
 c
@@ -557,16 +558,20 @@ c
                 return
           endif
 c
-         if(newdata(1).eq.-10
+c        if(newdata(1).eq.-10  !  Was 10... 
+         if(newdata(1).eq.-12
      *     )then
 c
 c      The window has been resized.  Draw different size at same resltn
 c
-               xcen=srmin+(dx*dfloat(       newdata(2)))
-               ycen=simin+(dy*dfloat(iymold-newdata(3)))
+c            Leave deltay, xcen and ycen alone
+c
                ixm=newdata(4)
                iym=newdata(5)
-               deltay=deltay*dfloat(newdata(6))/dfloat(iymold)
+               dy=deltay/dfloat(iym-1)
+               dx=dy
+               simin=ycen-(.5_8*deltay)
+               srmin=xcen-(.5_8*dx*dfloat(ixm-1))
          endif
 c
          if(newdata(1).eq.-998
@@ -1039,7 +1044,7 @@ c
 105   format(i4,' idle slaves,',i10,' lines,',i14,' pels')
 106   format('Work ex',i4,' to',i4,': ',5i7)
 107   format(30x,'Number of work lines=',i4)
-108   format('To slave',i4,': MPI_REAL8',i4,', tag',i5'. ierror=',i6)
+108   format('To slave',i4,':  tag',i5'. ierror=',i6)
 109   format('Asking slave',i4,' for work (',i2,' times already)')
 110   format('Signed off slave',i4,'                         ')
 111   format(/10(12i6,/))

@@ -4,6 +4,8 @@ c      Draws cuboid from 8 xy pairs
 c
       use isocomm
 c
+      real (8)tx,ty
+c
       integer, dimension (6) :: list_of_faces
 c
       character *3 label

@@ -5,6 +5,8 @@ c      (xp,yp,zp)
 c 
       use isocomm
 c
+      real (8) x,y
+c
 c     write(*,100)
       call tanxy(xp,yp,zp,xphoto,yphoto)
       x=(xphoto/scale)+xoffset

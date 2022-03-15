@@ -267,7 +267,7 @@ c
               mhuge=(ixm+2)*(iym+2)
 c
               if(allocated(mapdata))deallocate(mapdata)
-              allocate(mapdata(ixm,iym),stat=ierror)
+              allocate(mapdata(0:ixm+1,0:iym+1),stat=ierror)
               if(ierror.ne.0)nerror=nerror+100000
               nhuge=ixm*iym
 c
@@ -1030,7 +1030,8 @@ c
 c
 c      Select the next point by the mouse
 c
-                    call picker(nbut,kxcen,kycen,kdy,dx,dy,simin,srmin)
+                    call picker(nbut,kxcen,kycen,ixmp,iymp,kdy,dx,dy
+     *                         ,simin,srmin)
                 else
                     nbut=-999	!No screen graphics, no autocycle
               endif
@@ -1039,35 +1040,35 @@ c
 c 3   continue
 c
 c      nbut=-10 : Exposed
-c      nbut=-10 : Resized
+c      nbut=-12 : Resized
 c      nbut=  1 : Button 1
 c      nbut=  2 : Button 2
 c      nbut=  3 : Button 3
 c
 c      End of user interaction
 c
-c                   write(*,120)nbut,kxcen,kycen,ixm,iym,kdy
+                    write(0,120)nbut,kxcen,kycen,ixmp,iymp,kdy
              ntotpels=0
              newdata(1)=nbut
              newdata(2)=kxcen
              newdata(3)=kycen
-             newdata(4)=ixm
-             newdata(5)=iym
+             newdata(4)=ixmp
+             newdata(5)=iymp
              newdata(6)=kdy
-             if(nbut.eq.-10
-     *         )then
+c            if(nbut.eq.-12
+c    *         )then
 c
 c      We are resizing and must open another window
 c
-                     call x11close()
-                     needwin=.true.
-             endif
+c                    call x11close()
+c                    needwin=.true.
+c            endif
              call MPI_send(newdata,6,MPI_INTEGER4
      *                    ,master,ntag,icomm,ierror)
              msgcount_out(ntag)=msgcount_out(ntag)+1
              if(check
      *         )then
-                    write(txtout,116)(newdata(mx),mx=1,6)
+                    write(txtout,116)(newdata(mx),mx=1,6),ntag
                     call statout
              endif
                       
@@ -1100,7 +1101,7 @@ c
      *      ,'), starting in',i3,' seconds')
 114   format('Design and copyright reserved John Watts 2012')
 115   format('No new window required')
-116   format('NBUT,izc,izm,dy',6i5)
+116   format('NEWDATA',6i5,', TAG:',i4)
 117   format('Waiting for a message from anyone...!'
      *      ,' icomm=',i10,', msgwaiting is',l2', nwait=',i3)
 1171  format('                                     '
@@ -1110,7 +1111,7 @@ c
 118   format('Source: ',i8,', IT:     ',5i8,
      *      /'IHEIGHT:',i32,', RATIO:',f8.2,', LOG(RATIO):',f8.3)
 119   format('MASTER task is:',i4)
-120   format('ISOARTST/PICKER: nbut,kxcen,kycen,ixm,iym,kdy',6i8)
+120   format('ISOARTST (ex-PICKER): nbut,kxcen,kycen,ixm,iym,kdy',6i8)
 121   format('No changeable colours')
 122   format('ISOCOLS has value of',i4)
 123   format('IXCMAX=',i5,', IXCMIN=',i5,', IYCMAX=',i5,', IYCMIN=',i5

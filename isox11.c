@@ -867,6 +867,12 @@ void x11mouse_(int *nbut,int *mousex,int *mousey,int *newx,int *newy)
             case ConfigureNotify:
                {
 if(event_msg)printf("ISOX11.C: Next event from x11mouse is ConfigureNotify %d \n",xev.type);
+
+                 *nbut=-12;
+                 *mousex=xev.xconfigure.x;
+                 *mousey=xev.xconfigure.y;
+                 *newx=xev.xconfigure.width -xev.xconfigure.border_width;
+                 *newy=xev.xconfigure.height-xev.xconfigure.border_width;
                  break;
                }
 
@@ -901,8 +907,8 @@ XLookupString(&xev.xkey,buffer,MAXLINE,&myKeysym,&myStatus);
 #include "keydefs.h"
                  *nbut=xev.xkey.keycode;
 if(event_msg)printf("ISOX11.C: Key %d pressed in x11mouse..!\n",*nbut);
-                 *mousex=0;
-                 *mousey=0;
+                 *mousex=xev.xkey.x;;
+                 *mousey=xev.xkey.y;
                  *newx=0;
                  *newy=0;
                  break;
@@ -946,6 +952,7 @@ if(event_msg)printf("ISOX11.C: Next event from x11mouse is ResizeRequest %d \n",
 */
                   break;
                }
+
 
             case Expose:
                {
