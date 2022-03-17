@@ -1,6 +1,7 @@
       subroutine eyepoint(r,theta,phi)
 c
       use isocomm
+      real (8)r,theta,phi
 c
 c      r (radius), theta (angle with X-axis), phi (angle with X-Z plane)
 c      are all REAL (4) !!
@@ -12,6 +13,7 @@ c
 c
 c      Eyepoint is at (xe,ye,ze)
 c
+      write(0,*)r, theta, phi
       degrad=355./(113.*180.)
 c     zalpha=degrad*alpha
       ztheta=degrad*theta

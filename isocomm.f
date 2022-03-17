@@ -10,7 +10,7 @@ c
      *       ,aplane,bplane,cplane,dplane,eyemul
      *       ,xn,yn,zn,xr,yr,zr,cdist2,r2c,slopex,cx,sp,cp
      *       ,xi,yi,zi,xmax,xmin,ymax,ymin
-     *       ,diagonal,dmin,dmax
+     *       ,dmin,dmax
      *       ,xe,ye,ze,xcentre,ycentre,zcentre
      *       ,rr2,rd2,d2
      *       ,viewangle,photomax
@@ -36,6 +36,8 @@ c
      *       ,nfv  (8,3),nvf  (6,4),newscore(20),nscore
      *       ,nvopp(8,3),npx,npy,kvtx(100),kcube(100),ivd(4),kvj(100)
 
+c
+      real(8)diagonal
 c
       character(20) tag(0:20)
       character(25) statout_hdr,statout_hdr_old

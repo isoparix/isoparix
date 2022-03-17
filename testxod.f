@@ -36,6 +36,8 @@ c
      *              ,%val(ix2),%val(iy2),%val(ncol))
       call x11flush()
       call microsleep(1000000)
+      write(*,*)'Press number/Enter to end'
+      read(*,*)junk
       call x11close()
 c
       stop

@@ -157,7 +157,8 @@ void x11textwin_(int ixm, int iym,char *title_text)
    XSelectInput(isodisplay,TextWindow,
          ExposureMask      |VisibilityChangeMask| ButtonPressMask
        | ButtonReleaseMask | PropertyChangeMask | StructureNotifyMask 
-       | ResizeRedirectMask|KeyPressMask        | PointerMotionMask
+                           |KeyPressMask        | PointerMotionMask
+/*     | ResizeRedirectMask|KeyPressMask        | PointerMotionMask   */
        | FocusChangeMask
                 );
    }/* x11textwin */

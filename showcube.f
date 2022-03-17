@@ -7,7 +7,7 @@ c
 c
       logical movie 
 c
-      real(8) told,tnew
+      real(8) told,tnew,diag_delta
 c
       check=.true.
       lchann=10
@@ -51,7 +51,7 @@ c
       theta_delta=phi_delta*sqrt(2.)
       call screenscale(int(theta),int(phi))
 c
-      diag_delta=.01*diagonal
+      diag_delta=.01*diagonal      
 c
       call cubeadd(1, ixm/8,-iym/2, ixm/2,-iym/8,10)
       call cubeadd(2, ixm/8, iym/8, ixm/2, iym/2,40)

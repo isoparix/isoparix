@@ -16,7 +16,7 @@ c
 c
       do iph=0,89,89
          do ith=0,360,2
-           call eyepoint(diagonal,real(ith),real(iph))
+           call eyepoint(diagonal,real(ith,8),real(iph,8))
             do i=1-ixmh,ixm-ixmh,ixm-1
                xp=i
                do j=0,100,100

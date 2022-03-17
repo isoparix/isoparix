@@ -1,6 +1,7 @@
       subroutine axes
 c
       use isocomm
+      real (8) x,y
 c
 c      Draw a blob on the screen at the origin..
 c
