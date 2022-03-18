@@ -8,9 +8,9 @@ c
      *  )then
              cept=((x1*y2)-(y1*x2))/(x1-x2)
          else
-c            cept=huge(cept)
-             cept=0.0
+             cept=123456789.0   ! Unresolvable...
       endif
+c
 c     write(0,100)x1,y1,x2,y2,cept
 c
 100   FORMAT('CEPT:',25x,5e14.5)

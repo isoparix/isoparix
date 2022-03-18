@@ -55,7 +55,7 @@ c
 c
 c      Make the defined plane
 c
-      call eyepoint(diagonal,real(itheta),real(iphi))
+      call eyepoint(diagonal,real(itheta,8),real(iphi,8))
 c
       return
 c

@@ -8,7 +8,7 @@ c
      *  )then
              slope=(y1-y2)/(x1-x2)
          else
-             slope=huge(slope)
+             slope=123456789.0   ! Unresolvable...
       endif
 c
 c     write(0,100)x1,y1,x2,y2,slope

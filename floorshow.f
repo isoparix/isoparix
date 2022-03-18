@@ -7,7 +7,7 @@ c
       do nc=1,ncubes
          if(.not.active(nc)
      *     )then
-                write(0,100)nc,facecol(nc)
+c               write(0,100)nc,facecol(nc)
                 call drawface(nc,5,facecol(nc),3)
          endif
       enddo

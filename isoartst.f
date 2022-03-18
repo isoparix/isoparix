@@ -106,7 +106,7 @@ c
      *  )then
              call microsleep(4000)
              itheta=itheta+1
-             call eyepoint(diagonal,float(itheta),float(iphi))
+             call eyepoint(diagonal,real(itheta,8),real(iphi,8))
              call x11clearpixmap() 
              call scene
              call x11flush()
@@ -709,7 +709,8 @@ c
                        a=n
                        itheta=tha+(a*deltheta)
                        iphi  =pha+(a*delphi)
-                       call eyepoint(diagonal,float(itheta),float(iphi))
+                       call eyepoint(diagonal,real(itheta,8)
+     *                                       ,real(iphi,8))
                        call x11clearpixmap() 
                        call flooralone
                        call x11flush()
@@ -725,7 +726,8 @@ c
                        scale=scale*ar
 c                      xoffset=xoffset*ar
 c                      yoffset=yoffset*ar
-                       call eyepoint(diagonal,float(itheta),float(iphi))
+                       call eyepoint(diagonal,real(itheta,8)
+     *                                       ,real(iphi,8))
                        call x11clearpixmap() 
                        call flooralone
                        call x11flush()

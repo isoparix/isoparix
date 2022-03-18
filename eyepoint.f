@@ -13,7 +13,7 @@ c
 c
 c      Eyepoint is at (xe,ye,ze)
 c
-      write(0,*)r, theta, phi
+c     write(0,*)r, theta, phi
       degrad=355./(113.*180.)
 c     zalpha=degrad*alpha
       ztheta=degrad*theta
