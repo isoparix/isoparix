@@ -9,7 +9,7 @@ c
 c
       logical movie 
 c
-      check=. true.
+      check=.false.
       lchann=10
 c
 c      Read in the details of the colour map
@@ -142,7 +142,7 @@ c
          told=tnew
          write(*,101)fps
          npass=npass+1
-         if(npass.gt.5)stop
+         if(npass.gt.100)stop
       go to 1
 c
 100   format('NBUT:',i5)

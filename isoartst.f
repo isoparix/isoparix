@@ -433,9 +433,16 @@ c
      *               ,%val(  pred), %val(  pgreen), %val(  pblue)
      *                             )
 c
-c     write(*,*)      phired, phigreen, phiblue
-c    *               ,  ared,   agreen,   ablue
-c    *               ,  pred,   pgreen,   pblue
+c
+c      Check the return code from x11winope...
+c
+      if(irc.lt.0   !  Failure
+     *  )then
+             iso_mpi_term=.true.
+             return
+      endif
+c                     
+c
                      if(check
      *                 )then
                             txtout='X-window has been attempted'
@@ -1047,9 +1054,14 @@ c      nbut=  1 : Button 1
 c      nbut=  2 : Button 2
 c      nbut=  3 : Button 3
 c
-c      End of user interaction
+c      End of user interaction - announce the next action
 c
-                    write(0,120)nbut,kxcen,kycen,ixmp,iymp,kdy
+             if(nbut.eq.-12)write(0,300)ixmp,iymp
+             if(nbut.eq.1  .or.nbut.eq.10)write(0,301)
+             if(nbut.eq.2  .or.nbut.eq.11)write(0,302)
+             if(nbut.eq.3  .or.nbut.eq.12)write(0,303)
+             if(nbut.eq.69 )write(0,304)
+c
              ntotpels=0
              newdata(1)=nbut
              newdata(2)=kxcen
@@ -1162,4 +1174,16 @@ c
 153   format('Max value of MSET',i10)
 200   format(5(e24.17,/))
 201   format(a30)
+c
+300   format(///'*********',/'Window resized to '
+     *    ,i0.0,' x ',i0.0,/'*********',//)
+301   format(///'*********',/'New area selected',/'*********',//)
+302   format(///'*********',/'Mandelbrot <==> Julia swap'
+     *        ,/'*********',//)
+3021  format(///'*********',/'Mandelbrot <==> Julia',/'*********',//)
+3022  format(///'*********',/'Julia ==> Mandelbrot',/'*********',//)
+303   format(///'*********',/'Back to previous selection'
+     *        ,/'*********',//)
+304   format(///'*********',/'Closedown',/'*********',//)
+
       end
