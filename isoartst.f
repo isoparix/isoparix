@@ -267,7 +267,8 @@ c
               mhuge=(ixm+2)*(iym+2)
 c
               if(allocated(mapdata))deallocate(mapdata)
-              allocate(mapdata(0:ixm+1,0:iym+1),stat=ierror)
+              allocate(mapdata(  ixm  ,  iym  ),stat=ierror)
+c             allocate(mapdata(0:ixm+1,0:iym+1),stat=ierror)
               if(ierror.ne.0)nerror=nerror+100000
               nhuge=ixm*iym
 c
