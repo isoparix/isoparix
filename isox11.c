@@ -291,7 +291,8 @@ XTranslateCoordinates(isodisplay,window,winRoot,0,0
    XSelectInput(isodisplay,window,
          ExposureMask       | VisibilityChangeMask| ButtonPressMask
        | ButtonReleaseMask  | PropertyChangeMask  | StructureNotifyMask 
-       | ResizeRedirectMask | KeyPressMask        | PointerMotionMask
+/*     | ResizeRedirectMask | KeyPressMask        | PointerMotionMask  */
+                            | KeyPressMask        | PointerMotionMask
        | FocusChangeMask
                ); 
    XSetLineAttributes(isodisplay,gcb,0,LineSolid,CapButt,JoinBevel);
