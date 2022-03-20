@@ -6,7 +6,9 @@ c
 c
       if((ix2.le.ix1).or.(iz2.le.iz1)
      *  )then
-             write(*,101)ix1,iz1,ix2,iz2,nx
+             write(     *,101)ix1,iz1,ix2,iz2,nx
+             write(txtout,101)ix1,iz1,ix2,iz2,nx
+             call statout
              return
       endif
 c
@@ -69,8 +71,7 @@ c
       enddo
       return
 c
-101   format('***** VALIDATION ERROR: X1=',i5
-     *      ,', Z1=',i5,', X2=',i5,', Z2=',i5,', NX=',i5)
+101   format('VALIDN_ERROR: X1,Z1,X2,Z2,NX:',5i5)
 103   format('***** VALIDATION ERROR: Cube',i4
      *      ,' (NPOS=',i1,', NX=',i3,')'
      *     ,/'                                ',4i5

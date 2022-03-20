@@ -100,6 +100,7 @@ c
 c                   call x11sync()
                     theta=theta+theta_delta
 c                   phi=phi+phi_delta
+                    nbut=0
                 else
                     call x11mouse(nbut,kxcen,kycen,ixm,iym)
 c

@@ -173,8 +173,6 @@ void x11winope_(int WIDTH, int HEIGHT,int *maxcols,int *isocols, int *rc,
    isolog =fopen("isox11.log" ,"w");
    isocmap=fopen("isox11.cmap","w"); 
    fprintf(isolog,"ISOX11.C: x11winope has been entered\n");
-   fprintf(isolog,"ISOX11.C: x11winope: XopenDisplay:\n Width, Height,maxcols, isocols, result=%8d%8d%8d%8d%8d\n",WIDTH,HEIGHT,*maxcols,*isocols,*rc);
-    printf(       "ISOX11.C: x11winope: XopenDisplay:\n Width, Height,maxcols, isocols, result=%8d%8d%8d%8d%8d\n",WIDTH,HEIGHT,*maxcols,*isocols,*rc);
    *rc = -2;
    isodisplayname=XDisplayName(NULL);
 /*   char *isodisplayname = NULL; */
@@ -191,6 +189,8 @@ void x11winope_(int WIDTH, int HEIGHT,int *maxcols,int *isocols, int *rc,
            return;
          }
        *rc=0;
+   fprintf(isolog,"ISOX11.C: x11winope: XopenDisplay:\n Width, Height,maxcols, isocols, result=%8d%8d%8d%8d%8d\n",WIDTH,HEIGHT,*maxcols,*isocols,*rc);
+    printf(       "ISOX11.C: x11winope: XopenDisplay:\n Width, Height,maxcols, isocols, result=%8d%8d%8d%8d%8d\n",WIDTH,HEIGHT,*maxcols,*isocols,*rc);
    fprintf(isolog,"ISOX11.C: x11winope has a good window on display %20d\n",isodisplay);
     printf(       "ISOX11.C: x11winope has a good window on display %20d\n",isodisplay);
    mapping=0;

@@ -608,7 +608,8 @@ c
              call title
              if(check)call statout
 c
-             if(nwork.eq.2
+             if(nwork.eq.2.and.
+     *          it(4).ge.0 !  Don't try to draw a box on a row or column..
      *         )then
 c
 c      We're monitoring with cubes....
