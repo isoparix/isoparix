@@ -26,14 +26,21 @@ c
       kyold=kycen
       idxold=idx
       idyold=idy
+      resize=.false.
 c
   2   continue
 c
 c      Issue a blocking call to check mouse or keyboard
 c
       call x11mouse(nbut,kxcorner,kycorner,ixmp,iymp)
-      if(nbut.ne.-994.and.nbut.ne.-999.and.check)write(0,101)
-     *nbut,kxcorner,kycorner,ixmp,iymp,ixm,iym
+c     if(nbut.ne.-994.and.nbut.ne.-999.and.check)write(0,101)
+      if(                                  check)write(0,101)
+     *nbut,kxcorner,kycorner,ixmp,iymp,ixm,iym,resize
+      if(nbut.lt.0.and.nbut.ne.-12..and.resize
+     *  )then
+             nbut=-12
+             return
+      endif
       if(nbut.eq.69)return  ! F3 pressed
       if(nbut.eq.36)nbut=1  ! Enter key proceeds to next picture
       if(nbut.gt.0.and.nbut.le.3    !  For mouse input
@@ -64,10 +71,11 @@ c
              if((ixm.eq.ixmp-1.and.iym.eq.iymp-1).or.
      *          (ixm.eq.ixmp  .and.iym.eq.iymp  )
      *         )then
-                    go to 2
+                    resize=.false.
                 else
-                    return
+                    resize=.true.
              endif
+             go to 2   ! Wait for a ???? event
       endif
 c
       if(nbut.gt.-800
@@ -163,8 +171,8 @@ c
 100   format('PICKER - Box resized to ',2i8,'. Centre at',2i8
      *      ,'. IDY=',i8)
 101   format('PICKER - NBUT:',i5
-     *      ,', KXCORNER:',i4,', KYCORNER:',i4
-     *      ,', IXMP:',i4,', IYMP:',i4,', IXM, IYM',2i4)
+     *      ,', KXCORNER:',i5,', KYCORNER:',i5
+     *      ,', IXMP:',i5,', IYMP:',i5,', IXM, IYM',2i5,' RESIZE:',L2)
 102   format('Next picture - Mouse button or keyboard ',
      *       'number: 1 Zoom in; 2 Mandelbrot<->Julia; 3 Back out.',
      *       ' F3 to end.',

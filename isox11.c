@@ -880,28 +880,33 @@ if(event_msg)printf("ISOX11.C: Next event from x11mouse is ConfigureNotify %d \n
                  *newy=xev.xconfigure.height;
                  break;
                }
-
+/*
             case PropertyNotify:
                {
 if(event_msg)printf("ISOX11.C: Next event from x11mouse is PropertyNotify %d \n",xev.type);
+                 *nbut=-9;
                  break;
                }
+*/	       
 
             case VisibilityNotify:
                {
 if(event_msg)printf("ISOX11.C: Next event from x11mouse is VisibilityNotify %d \n",xev.type);
+                 *nbut=-8;
                  break;
                }
 
             case FocusOut:
                {
 if(event_msg)printf("ISOX11.C: Next event from x11mouse is FocusOut %d \n",xev.type);
+                 *nbut=-7;
                  break;
                }
 
             case FocusIn:
                {
 if(event_msg)printf("ISOX11.C: Next event from x11mouse is FocusIn %d \n",xev.type);
+                 *nbut=-6;
                  break;
                }
 
@@ -937,24 +942,6 @@ if(event_msg)printf("ISOX11.C: Next event from x11mouse is ResizeRequest %d \n",
                   *newy=xev.xresizerequest.height;
                   width=*newx;
                   height=*newy;
-/*
-                  printf("ISOX11.C: New window is %d %d \n",width, height);
-               open_new_window:
-                  XCloseDisplay(isodisplay);
-                  XFlush(isodisplay);
-                  isodisplay=NULL;
-                  x11winope_(width,height,&mx,&isox,&rcx,
-                            phired, phigreen, phiblue,
-                            ared,   agreen,   ablue,
-                            pred,   pgreen,   pblue );
-                  if(rcx<0)
-                     {
-                      printf("ISOX11.C: Couldn't reopen window after resize/close\n");
-                      goto open_new_window;
-                     } 
-                  *nbut=-11;
-                  printf("ISOX11.C: Resized! %d %d\n",mx,rcx);
-*/
                   break;
                }
 
