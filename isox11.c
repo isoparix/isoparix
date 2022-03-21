@@ -156,7 +156,8 @@ void x11textwin_(int ixm, int iym,char *title_text)
    XStoreName(isodisplay,TextWindow,title_text);
    XSelectInput(isodisplay,TextWindow,
          ExposureMask      |VisibilityChangeMask| ButtonPressMask
-       | ButtonReleaseMask | PropertyChangeMask | StructureNotifyMask 
+       | ButtonReleaseMask | PropertyChangeMask 
+/*     | ButtonReleaseMask | PropertyChangeMask | StructureNotifyMask */
                            |KeyPressMask        | PointerMotionMask
 /*     | ResizeRedirectMask|KeyPressMask        | PointerMotionMask   */
        | FocusChangeMask
@@ -873,8 +874,10 @@ if(event_msg)printf("ISOX11.C: Next event from x11mouse is ConfigureNotify %d \n
                  *nbut=-12;
                  *mousex=xev.xconfigure.x;
                  *mousey=xev.xconfigure.y;
-                 *newx=xev.xconfigure.width -xev.xconfigure.border_width;
-                 *newy=xev.xconfigure.height-xev.xconfigure.border_width;
+             /*  *newx=xev.xconfigure.width -xev.xconfigure.border_width;
+                 *newy=xev.xconfigure.height-xev.xconfigure.border_width; */
+                 *newx=xev.xconfigure.width;
+                 *newy=xev.xconfigure.height;
                  break;
                }
 
