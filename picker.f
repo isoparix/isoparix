@@ -33,10 +33,10 @@ c
 c      Issue a blocking call to check mouse or keyboard
 c
       call x11mouse(nbut,kxcorner,kycorner,ixmp,iymp)
-c     if(nbut.ne.-994.and.nbut.ne.-999.and.check)write(0,101)
-      if(                                  check)write(0,101)
-     *nbut,kxcorner,kycorner,ixmp,iymp,ixm,iym,resize
-      if(nbut.lt.0.and.nbut.ne.-12..and.resize
+      if(check)write(0,101)nbut,kxcorner,kycorner,ixmp,iymp
+     *                                           ,ixm, iym,resize
+c     if(nbut.lt.0.and.nbut.ne.-12..and.resize
+      if(nbut.eq.-10.and.resize
      *  )then
              nbut=-12
              return
@@ -52,14 +52,6 @@ c      Accept only button-releases...
 c
              return
       endif
-c
-c     if(nbut.eq.-10
-c    *  )then
-c
-c      Window has been exposed, so refresh it..
-c
-c            go to 2
-c     endif
 c
       if(nbut.eq.-12
      *  )then
@@ -81,13 +73,6 @@ c
       if(nbut.gt.-800
      *  )then
              kdy=2*idy
-c            if(resize
-c    *         )then
-c                   nbut=-10
-c                   kxcen=kxcorner
-c                   kycen=kycorner
-c                   write(0,100)ixm,iym,kxcen,kycen,idy
-c            endif
       endif
 c
       kd=0

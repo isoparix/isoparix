@@ -1071,14 +1071,6 @@ c
              newdata(4)=ixmp
              newdata(5)=iymp
              newdata(6)=kdy
-c            if(nbut.eq.-12
-c    *         )then
-c
-c      We are resizing and must open another window
-c
-c                    call x11close()
-c                    needwin=.true.
-c            endif
              call MPI_send(newdata,6,MPI_INTEGER4
      *                    ,master,ntag,icomm,ierror)
              msgcount_out(ntag)=msgcount_out(ntag)+1
