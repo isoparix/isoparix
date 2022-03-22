@@ -38,7 +38,7 @@
    XPoint             *polypoints;
    Display            *isodisplay;
    Visual             *visual;
-   Window             window,ChildReturn,RootReturn,TextWindow;
+   Window             window,ChildReturn,RootReturn,TextWindow,JSWindow;
    Pixmap             PicturePixmap,PicturePixmap_B;
    XEvent             xev;
    XKeyEvent          xkev;
@@ -328,7 +328,7 @@ XTranslateCoordinates(isodisplay,window,winRoot,0,0
    fprintf(isolog,"ISOX11.C: Mapped window     : %20d\n", window);
    XFlush(isodisplay);
 /*
-   printf("ISOX11.C:Foreground black/white/neutral: %10d %10d %10d %10d %10d \n",gcv.foreground,gcbv.foreground,gcwv.foreground,BlackPixel(isodisplay,nScreen),WhitePixel(isodisplay,nScreen));
+   fprintf(isolog,"ISOX11.C:Foreground black/white/neutral: %10d %10d %10d %10d %10d \n",gcv.foreground,gcbv.foreground,gcwv.foreground,BlackPixel(isodisplay,nScreen),WhitePixel(isodisplay,nScreen));
 */
    if(mycol == 3)
                {
@@ -503,12 +503,12 @@ void x11config_(Window idmover)
       windelta.width=w;
       windelta.border_width=bw;
       windelta.stack_mode=Above;
-      printf("X      %d \n",windelta.x);
-      printf("Y      %d \n",windelta.y);
-      printf("Width  %d \n",windelta.width);
-      printf("Height %d \n",windelta.height);
-      printf("Border %d \n",windelta.border_width);
-      printf("Above  %d \n",windelta.stack_mode);
+      fprintf(isolog,"X      %d \n",windelta.x);
+      fprintf(isolog,"Y      %d \n",windelta.y);
+      fprintf(isolog,"Width  %d \n",windelta.width);
+      fprintf(isolog,"Height %d \n",windelta.height);
+      fprintf(isolog,"Border %d \n",windelta.border_width);
+      fprintf(isolog,"Above  %d \n",windelta.stack_mode);
 */
      i=XGetWindowAttributes (isodisplay,idmover,&win_attributes);
       h=win_attributes.height;
@@ -531,27 +531,27 @@ void x11sendevent_(Window idmover,int x, int y, int h, int w, int bw)
       xev.xconfigure.above=False;
       xev.xconfigure.override_redirect=False;
 
-      printf("ISOX11.C: True is %d, False is %d \n",True,False);
-      printf("ISOX11.C: Event  %d \n",xev.xconfigure.type);
-      printf("ISOX11.C: Window %d \n",xev.xconfigure.window);
-      printf("ISOX11.C: X      %d \n",xev.xconfigure.x);
-      printf("ISOX11.C: Y      %d \n",xev.xconfigure.y);
-      printf("ISOX11.C: Width  %d \n",xev.xconfigure.width);
-      printf("ISOX11.C: Height %d \n",xev.xconfigure.height);
-      printf("ISOX11.C: Border %d \n",xev.xconfigure.border_width);
-      printf("ISOX11.C: Above  %d \n",xev.xconfigure.above);
-      printf("ISOX11.C: O_ride %d \n",xev.xconfigure.override_redirect);
+      fprintf(isolog,"ISOX11.C: True is %d, False is %d \n",True,False);
+      fprintf(isolog,"ISOX11.C: Event  %d \n",xev.xconfigure.type);
+      fprintf(isolog,"ISOX11.C: Window %d \n",xev.xconfigure.window);
+      fprintf(isolog,"ISOX11.C: X      %d \n",xev.xconfigure.x);
+      fprintf(isolog,"ISOX11.C: Y      %d \n",xev.xconfigure.y);
+      fprintf(isolog,"ISOX11.C: Width  %d \n",xev.xconfigure.width);
+      fprintf(isolog,"ISOX11.C: Height %d \n",xev.xconfigure.height);
+      fprintf(isolog,"ISOX11.C: Border %d \n",xev.xconfigure.border_width);
+      fprintf(isolog,"ISOX11.C: Above  %d \n",xev.xconfigure.above);
+      fprintf(isolog,"ISOX11.C: O_ride %d \n",xev.xconfigure.override_redirect);
 
       if(XSendEvent(isodisplay,InputFocus,False,StructureNotifyMask,&xev))
-        printf("ISOX11.C: Result of XSendEvent is OK \n \n");
+        fprintf(isolog,"ISOX11.C: Result of XSendEvent is OK \n \n");
       else
-        printf("ISOX11.C: XSendevent failed \n \n"); 
+        fprintf(isolog,"ISOX11.C: XSendevent failed \n \n"); 
         XFlush(isodisplay);
    } /* x11windowmove */
 
 void x11peeker_()
    {
-      printf("ISOX11.C: Event: %d %d\n",XPeekEvent(isodisplay,&xev),xev.type);
+      fprintf(isolog,"ISOX11.C: Event: %d %d\n",XPeekEvent(isodisplay,&xev),xev.type);
 /*
       XFlush(isodisplay);
 */
@@ -560,8 +560,8 @@ void x11peeker_()
 void x11windowmove_(Window idmover,int x, int y, int h, int w, int bw)
    {
 /*
-      printf("ISOX11.C: Old window was at %d %d \n",x_old,y_old);
-      printf("ISOX11.C: New window  is at %d %d \n",x_new,y_new);
+      fprintf(isolog,"ISOX11.C: Old window was at %d %d \n",x_old,y_old);
+      fprintf(isolog,"ISOX11.C: New window  is at %d %d \n",x_new,y_new);
 */
       XMoveWindow(isodisplay,idmover,x,y);
       XFlush(isodisplay);
@@ -774,8 +774,8 @@ int x11colxlate_(int mcol, int *xcol)
 
 void x11qev_()
    {
-      printf("ISOX11.C: Number of events received from X-server, but not removed from the event queue %d \n", XPending(isodisplay));
-      printf("ISOX11.C: Number of events already in the event queue %d \n", XEventsQueued(isodisplay,QueuedAlready));
+      fprintf(isolog,"ISOX11.C: Number of events received from X-server, but not removed from the event queue %d \n", XPending(isodisplay));
+      fprintf(isolog,"ISOX11.C: Number of events already in the event queue %d \n", XEventsQueued(isodisplay,QueuedAlready));
    }/* x11qev */ 
 
 void x11blok_button_(int *nbut,int *mousex,int *mousey)
@@ -860,7 +860,7 @@ void x11mouse_(int *nbut,int *mousex,int *mousey,int *newx,int *newy)
       char           key_pressed;
   
         *nbut=-999;
-        event_msg=False;
+        event_msg=True;
          XNextEvent(isodisplay,&xev);
 /*
 */
@@ -869,7 +869,7 @@ void x11mouse_(int *nbut,int *mousex,int *mousey,int *newx,int *newy)
 
             case ConfigureNotify:
                {
-if(event_msg)printf("ISOX11.C: Next event from x11mouse is ConfigureNotify %d \n",xev.type);
+if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is ConfigureNotify %d \n",xev.type);
 
                  *nbut=-12;
                  *mousex=xev.xconfigure.x;
@@ -878,12 +878,14 @@ if(event_msg)printf("ISOX11.C: Next event from x11mouse is ConfigureNotify %d \n
                  *newy=xev.xconfigure.height-xev.xconfigure.border_width; */
                  *newx=xev.xconfigure.width;
                  *newy=xev.xconfigure.height;
+		 JSWindow=xev.xconfigure.window;
+		 if(event_msg)fprintf(isolog,"Changed window is %d\n",JSWindow);
                  break;
                }
 /*
             case PropertyNotify:
                {
-if(event_msg)printf("ISOX11.C: Next event from x11mouse is PropertyNotify %d \n",xev.type);
+if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is PropertyNotify %d \n",xev.type);
                  *nbut=-9;
                  break;
                }
@@ -891,32 +893,32 @@ if(event_msg)printf("ISOX11.C: Next event from x11mouse is PropertyNotify %d \n"
 
             case VisibilityNotify:
                {
-if(event_msg)printf("ISOX11.C: Next event from x11mouse is VisibilityNotify %d \n",xev.type);
+if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is VisibilityNotify %d \n",xev.type);
                  *nbut=-8;
                  break;
                }
 
             case FocusOut:
                {
-if(event_msg)printf("ISOX11.C: Next event from x11mouse is FocusOut %d \n",xev.type);
+if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is FocusOut %d \n",xev.type);
                  *nbut=-7;
                  break;
                }
 
             case FocusIn:
                {
-if(event_msg)printf("ISOX11.C: Next event from x11mouse is FocusIn %d \n",xev.type);
+if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is FocusIn %d \n",xev.type);
                  *nbut=-6;
                  break;
                }
 
             case KeyPress:
                {
-if(event_msg)printf("ISOX11.C: Next event from x11mouse is KeyPress %d \n",xev.type);
+if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is KeyPress %d \n",xev.type);
 XLookupString(&xev.xkey,buffer,MAXLINE,&myKeysym,&myStatus);
 #include "keydefs.h"
                  *nbut=xev.xkey.keycode;
-if(event_msg)printf("ISOX11.C: Key %d pressed in x11mouse..!\n",*nbut);
+if(event_msg)fprintf(isolog,"ISOX11.C: Key %d pressed in x11mouse..!\n",*nbut);
                  *mousex=xev.xkey.x;;
                  *mousey=xev.xkey.y;
                  *newx=0;
@@ -926,7 +928,7 @@ if(event_msg)printf("ISOX11.C: Key %d pressed in x11mouse..!\n",*nbut);
 
             case MotionNotify:
                {
-if(event_msg)printf("ISOX11.C: Next event from x11mouse is MotionNotify %d \n",xev.type);
+if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is MotionNotify %d \n",xev.type);
                 *nbut=-994;
                 *mousex=xev.xbutton.x;
                 *mousey=xev.xbutton.y;
@@ -936,7 +938,7 @@ if(event_msg)printf("ISOX11.C: Next event from x11mouse is MotionNotify %d \n",x
 
             case ResizeRequest:
                {
-if(event_msg)printf("ISOX11.C: Next event from x11mouse is ResizeRequest %d \n",xev.type);
+if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is ResizeRequest %d \n",xev.type);
                   *nbut=-11;
                   *newx=xev.xresizerequest.width;
                   *newy=xev.xresizerequest.height;
@@ -948,14 +950,14 @@ if(event_msg)printf("ISOX11.C: Next event from x11mouse is ResizeRequest %d \n",
 
             case Expose:
                {
-if(event_msg)printf("ISOX11.C: Next event from x11mouse is Expose %d \n",xev.type);
+if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is Expose %d \n",xev.type);
                   *nbut=-10; /* Window exposed*/
                   break;
                }
  
             case ButtonRelease:
                {
-if(event_msg)printf("ISOX11.C: Next event from x11mouse is ButtonRelease %d \n",xev.type);
+if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is ButtonRelease %d \n",xev.type);
                      *nbut=xev.xbutton.button;
                      *mousex=xev.xbutton.x;
                      *mousey=xev.xbutton.y;
@@ -964,7 +966,7 @@ if(event_msg)printf("ISOX11.C: Next event from x11mouse is ButtonRelease %d \n",
  
             case ButtonPress:
                {
-if(event_msg)printf("ISOX11.C: Next event from x11mouse is ButtonPress %d \n",xev.type);
+if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is ButtonPress %d \n",xev.type);
                      *nbut=-xev.xbutton.button;
                      *mousex=xev.xbutton.x;
                      *mousey=xev.xbutton.y;
@@ -978,7 +980,7 @@ if(event_msg)printf("ISOX11.C: Next event from x11mouse is ButtonPress %d \n",xe
 
 void x11close_()
    {
-   (void)  printf("ISOX11.C: x11winope about to close display %20d\n",isodisplay);
+   (void)  fprintf(isolog,"ISOX11.C: x11winope about to close display %20d\n",isodisplay);
                   if(mycol == 3)XFreeColormap(isodisplay,cmap1);
                   XFreePixmap(isodisplay,PicturePixmap);
                   XFlush(isodisplay);
@@ -990,7 +992,7 @@ void x11rectgc_(int x1, int y1a, int x2, int y2, int ncol)
 
    {     
 /*
-  printf("ISOX11.C: X11rectgc: Colour %8d at %8d %8d %8d %8d \n",ncol,x1,y1a,x2,y2);
+  fprintf(isolog,"ISOX11.C: X11rectgc: Colour %8d at %8d %8d %8d %8d \n",ncol,x1,y1a,x2,y2);
 */
       XSetForeground(isodisplay,gc,ncol);
       XFillRectangle(isodisplay,PicturePixmap,gc,x1,y1a,(x2-x1+1),(y2-y1a+1));
@@ -1000,7 +1002,7 @@ void x11rectfi_(int x1, int y1a, int x2, int y2, int ncol)
 
    {     
 /*
-  printf("ISOX11.C: X11rectfi: Colour %8d at %8d %8d %8d %8d \n",ncol,x1,y1a,x2,y2);
+  fprintf(isolog,"ISOX11.C: X11rectfi: Colour %8d at %8d %8d %8d %8d \n",ncol,x1,y1a,x2,y2);
 */
       XSetForeground(isodisplay,gc,ncell[ncol]);
       XFillRectangle(isodisplay,PicturePixmap,gc,x1,y1a,(x2-x1+1),(y2-y1a+1));
@@ -1031,7 +1033,7 @@ void x11ruler_(int x1, int y1, int y2, int y3, int y4, int ndx1, int ndx2)
    {     
 
 /*
-printf("ISOX11.C: X11RULER: Parameters are %8d,%8d,%8d,%8d,%8d,%8d,%8d\n",x1,y1,y2,y3,y4,ndx1,ndx2);
+fprintf(isolog,"ISOX11.C: X11RULER: Parameters are %8d,%8d,%8d,%8d,%8d,%8d,%8d\n",x1,y1,y2,y3,y4,ndx1,ndx2);
 */
 
       XSetFunction(isodisplay,gcw,GXinvert);
@@ -1183,7 +1185,7 @@ void x11updatezone_(int ix, int iy, int ix2, int iy2)
       iwidth =ix2-ix+1;
       iheight=iy2-iy+1;
 /*
-printf("X11UPDATE_ZONE: Pixmap/window top left is %8d,%8d, width is %8d, height is %8d\n",ix,iy,iwidth,iheight);
+fprintf(isolog,"X11UPDATE_ZONE: Pixmap/window top left is %8d,%8d, width is %8d, height is %8d\n",ix,iy,iwidth,iheight);
 */
       XCopyArea(isodisplay,PicturePixmap,window,gc,ix,iy,iwidth,iheight,ix,iy);
    }/* x11updatezone */
@@ -1194,7 +1196,7 @@ void x11flush_()
 
       XCopyArea(isodisplay,PicturePixmap,window,gc,0,0,win_attributes.width,win_attributes.height,0,0);
       /*
-printf("X11FLUSH: Pixmap/window width is %8d, height is %8d\n",win_attributes.width,win_attributes.height);
+fprintf(isolog,"X11FLUSH: Pixmap/window width is %8d, height is %8d\n",win_attributes.width,win_attributes.height);
       */
       XFlush(isodisplay);
    }/* x11flush */
@@ -1235,7 +1237,7 @@ int x11winsize_(int *winx1,int *winy1,int *winwidth,int *winheight)
 
 /*
        XGetGeometry(isodisplay,window,&RootReturn,&wx1,&wy1,&ww,&wh,&bordwidth,&depth);
-printf("X11WINSIZE: Window spec is %8d %8d %8d %8d %8d %8d \n",ww,wh,wx1,wy1,bordwidth,depth);
+fprintf(isolog,"X11WINSIZE: Window spec is %8d %8d %8d %8d %8d %8d \n",ww,wh,wx1,wy1,bordwidth,depth);
 */
 
        i=XGetWindowAttributes (isodisplay,window,&win_attributes);
@@ -1246,7 +1248,7 @@ printf("X11WINSIZE: Window spec is %8d %8d %8d %8d %8d %8d \n",ww,wh,wx1,wy1,bor
                                      ,-22
                                      ,&*winx1,&*winy1,&ChildReturn);
 
-printf("XGetAttributes: X=%4d, %4d, Y=%4d, %4d, Width=%4d, Height=%4d, Border_width=%2d, Depth=%2d \n"
+fprintf(isolog,"XGetAttributes: X=%4d, %4d, Y=%4d, %4d, Width=%4d, Height=%4d, Border_width=%2d, Depth=%2d \n"
                  ,win_attributes.x,*winx1
                  ,win_attributes.y,*winy1
                  ,win_attributes.width
@@ -1262,7 +1264,7 @@ int x11putimage_(int imgx1,int imgy1,int winx1,int winy1,int imgwidth,int imghei
       XFlush(isodisplay);
 /*
      XSync(isodisplay,True);
-   printf(" imgx1=%4d, imgy1=%4d, winx1=%4d, winy1=%4d,imgwidth=%4d, imgheight=%4d\n",
+   fprintf(isolog," imgx1=%4d, imgy1=%4d, winx1=%4d, winy1=%4d,imgwidth=%4d, imgheight=%4d\n",
             imgx1    , imgy1    , winx1    , winy1    ,imgwidth     ,imgheight);
 */
      XPutImage(isodisplay,window,gc,isoimage,imgx1,imgy1,winx1,winy1,imgwidth,imgheight);
@@ -1278,19 +1280,19 @@ void x11sync_()
    } /* x11sync */
 void x11getimage_(int xgx1,int xgy1,int xgwidth,int xgheight)
    {
-     printf("ISOX11.C: Securing image from %8d %8d %8d %8d\n",xgx1,xgy1,xgwidth,xgheight);
+     fprintf(isolog,"ISOX11.C: Securing image from %8d %8d %8d %8d\n",xgx1,xgy1,xgwidth,xgheight);
      isoimage=XGetImage(isodisplay,PicturePixmap,xgx1,xgy1,xgwidth,xgheight,AllPlanes,ZPixmap);
-     printf("ISOX11.C:  Image secured from %8d %8d %8d %8d\n",xgx1,xgy1,xgwidth,xgheight);
+     fprintf(isolog,"ISOX11.C:  Image secured from %8d %8d %8d %8d\n",xgx1,xgy1,xgwidth,xgheight);
    } /* x11getimage */
 
 void x11getpel_(int *npel, int x1, int y1)
    {
 /*
-     printf("ISOX11.C: X11GetPel: Getting pixel from %8d %8d\n",x1,y1);
+     fprintf(isolog,"ISOX11.C: X11GetPel: Getting pixel from %8d %8d\n",x1,y1);
 */
       *npel=XGetPixel(isoimage,x1,y1);
 /*
-     printf("ISOX11.C: X11GetPel: Pixel %8d secured from %8d %8d\n",*npel,x1,y1);
+     fprintf(isolog,"ISOX11.C: X11GetPel: Pixel %8d secured from %8d %8d\n",*npel,x1,y1);
 */
 
    } /* x11getpel */
@@ -1301,7 +1303,7 @@ void x11dispinfo_(int *maxwidth, int *maxheight,int *White, int *Black, int *rc)
       {
    if((isodisplay=XOpenDisplay(NULL))==NULL) /* Obtain default isodisplay */
         {
-	printf ("ISOX11.C: ERROR: unable to open isodisplay \n");
+	fprintf(isolog,"ISOX11.C: ERROR: unable to open isodisplay \n");
         *rc=-1;
 	return;
         }
