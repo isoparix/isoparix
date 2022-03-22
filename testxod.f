@@ -30,18 +30,29 @@ c
       iy1=iym/10
       ix2=ixm/2
       iy2=iym/2
-      ncol=100
+      ncol=120
       write(*,*)ix1,iy1,ix2,iy2,ncol
       call x11rectgc(%val(ix1),%val(iy1)
      *              ,%val(ix2),%val(iy2),%val(ncol))
       call x11flush()
-      call microsleep(1000000)
-      write(*,*)'Press number/Enter to end'
-      read(*,*)junk
-      call x11close()
+      write(*,*)'F3 to end'
 c
-      stop
+c      Issue a blocking call to check mouse or keyboard
+c
+  1   continue
+      call x11mouse(nbut,kxcorner,kycorner,ixmp,iymp)
+      write(0,101)nbut,kxcorner,kycorner,ixmp,iymp,ixm,iym
+      if(nbut.eq.69
+     *  )then
+             call x11close()
+             stop
+         else
+             go to 1
+      endif
 c
 100   format('Stopping with return code:', i6)      
+101   format('PICKER - NBUT:',i5
+     *      ,', KXCORNER:',i5,', KYCORNER:',i5
+     *      ,', IXMP:',i5,', IYMP:',i5,', IXM, IYM',2i5)
 102   format('MAISOX=',i8,', ISOCOLS=',i8,', RESULT=',i8)
       end

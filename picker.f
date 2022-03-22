@@ -1,4 +1,4 @@
-      subroutine picker(nbut,kxcen,kycen,ixmp,iymp,kdy,dx,dy
+      subroutine picker(nbut,kxcen,kycen,iwidth,iheight,kdy,dx,dy
      *                 ,simin,srmin)
 c
 c      Gets the results of pressing buttons, selecting new pic
@@ -32,8 +32,8 @@ c
 c
 c      Issue a blocking call to check mouse or keyboard
 c
-      call x11mouse(nbut,kxcorner,kycorner,ixmp,iymp)
-      if(check)write(0,101)nbut,kxcorner,kycorner,ixmp,iymp
+      call x11mouse(nbut,mousex,mousey,iwidth,iheight)
+      if(check)write(0,101)nbut,mousex,mousey,iwidth,iheight
      *                                           ,ixm, iym,resize
 c     if(nbut.lt.0.and.nbut.ne.-12..and.resize
       if(nbut.eq.-10.and.resize
@@ -60,8 +60,8 @@ c      Window has been resized, so record details
 c
              kxcen=kxold
              kycen=kyold
-             if((ixm.eq.ixmp-1.and.iym.eq.iymp-1).or.
-     *          (ixm.eq.ixmp  .and.iym.eq.iymp  )
+             if((ixm.eq.iwidth-1.and.iym.eq.iheight-1).or.
+     *          (ixm.eq.iwidth  .and.iym.eq.iheight  )
      *         )then
                     resize=.false.
                 else
@@ -120,8 +120,8 @@ c
       if(nbut.eq.-994
      *  )then
              newposition=.true.
-             kxcen=kxcorner
-             kycen=kycorner
+             kxcen=mousex
+             kycen=mousey
       endif
 c
 c      Wipe out old box...
@@ -156,8 +156,9 @@ c
 100   format('PICKER - Box resized to ',2i8,'. Centre at',2i8
      *      ,'. IDY=',i8)
 101   format('PICKER - NBUT:',i5
-     *      ,', KXCORNER:',i5,', KYCORNER:',i5
-     *      ,', IXMP:',i5,', IYMP:',i5,', IXM, IYM',2i5,' RESIZE:',L2)
+     *      ,', MouseX:',i5,', MouseY:',i5
+     *      ,', Width:',i5,', Height:',i5,', IXM, IYM',2i5
+     *      ,' RESIZE:',L2)
 102   format('Next picture - Mouse button or keyboard ',
      *       'number: 1 Zoom in; 2 Mandelbrot<->Julia; 3 Back out.',
      *       ' F3 to end.',

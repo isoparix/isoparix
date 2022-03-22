@@ -316,8 +316,8 @@ $(ISOPARIX)/readbmp.exe: readbmp.o
 #$(ISOPARIX)/showcubes.exe: showcubes.o $(ARTSTOBJS) $(BMOBJS)
 #$(MPFC) $(PARFLAGS)  showcubes.o $(ARTSTOBJS) $(BMOBJS) -o $@ $(LD_X11)
 
-$(ISOPARIX)/testxod.exe: testxod.o isox11.o defmap.o bmp_comms.o read_cmap_params.o isoflush.o microsleep.o tim.o ctim.o 
-	$(LD)  testxod.o isox11.o defmap.o bmp_comms.o read_cmap_params.o isoflush.o microsleep.o tim.o ctim.o  -o $@ $(LD_X11)
+$(ISOPARIX)/testxod.exe: testxod.o $(ARTSTOBJS) $(BMOBJS)
+	$(LD)  testxod.o $(ARTSTOBJS) $(BMOBJS) -o $@ $(LD_X11)
 
 $(ISOPARIX)/showcube.exe: showcube.o $(ARTSTOBJS) $(BMOBJS)
 	$(LD)  showcube.o $(ARTSTOBJS) $(BMOBJS) -o $@ $(LD_X11)
