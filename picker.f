@@ -35,12 +35,6 @@ c
       call x11mouse(nbut,mousex,mousey,iwidth,iheight)
       if(check)write(0,101)nbut,mousex,mousey,iwidth,iheight
      *                                           ,ixm, iym,resize
-c     if(nbut.lt.0.and.nbut.ne.-12..and.resize
-      if(nbut.eq.-10.and.resize
-     *  )then
-             nbut=-12
-             return
-      endif
       if(nbut.eq.69)return  ! F3 pressed
       if(nbut.eq.36)nbut=1  ! Enter key proceeds to next picture
       if(nbut.gt.0.and.nbut.le.3    !  For mouse input
@@ -53,21 +47,21 @@ c
              return
       endif
 c
-      if(nbut.eq.-12
+      if(nbut.eq.-10
      *  )then
 c
-c      Window has been resized, so record details
+c      Window has been exposed, so record details
 c
              kxcen=kxold
              kycen=kyold
              if((ixm.eq.iwidth-1.and.iym.eq.iheight-1).or.
      *          (ixm.eq.iwidth  .and.iym.eq.iheight  )
      *         )then
-                    resize=.false.
+                    go to 2
                 else
-                    resize=.true.
+                    nbut=111   !  New resize return code
+                    return
              endif
-             go to 2   ! Wait for a ???? event
       endif
 c
       if(nbut.gt.-800

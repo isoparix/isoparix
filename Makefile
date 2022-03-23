@@ -83,7 +83,7 @@ $(ISOPARIX)/showcube.exe      $(ISOPARIX)/showcubes.exe  \
 $(ISOPARIX)/test_side.exe     $(ISOPARIX)/font_file.exe  \
 $(ISOPARIX)/test_defmap.exe   $(ISOPARIX)/offprep.exe    \
 $(ISOPARIX)/msetview.exe                                 \
-$(ISOPARIX)/fractiler.exe     $(ISOPARIX)/testxod.exe    \
+$(ISOPARIX)/fractiler.exe                                \
 $(TOOLS)/barclays_csv.exe     $(TOOLS)/barclays_pdf.exe $(TOOLS)/barclays.exe
 
 #networks: $(NETWORKS)/links.exe
@@ -316,8 +316,8 @@ $(ISOPARIX)/readbmp.exe: readbmp.o
 #$(ISOPARIX)/showcubes.exe: showcubes.o $(ARTSTOBJS) $(BMOBJS)
 #$(MPFC) $(PARFLAGS)  showcubes.o $(ARTSTOBJS) $(BMOBJS) -o $@ $(LD_X11)
 
-$(ISOPARIX)/testxod.exe: testxod.o $(ARTSTOBJS) $(BMOBJS)
-	$(LD)  testxod.o $(ARTSTOBJS) $(BMOBJS) -o $@ $(LD_X11)
+#$(ISOPARIX)/testxod.exe: testxod.o $(ARTSTOBJS) $(BMOBJS)
+#$(LD)  testxod.o $(ARTSTOBJS) $(BMOBJS) -o $@ $(LD_X11)
 
 $(ISOPARIX)/showcube.exe: showcube.o $(ARTSTOBJS) $(BMOBJS)
 	$(LD)  showcube.o $(ARTSTOBJS) $(BMOBJS) -o $@ $(LD_X11)

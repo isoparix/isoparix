@@ -559,7 +559,7 @@ c
           endif
 c
 c        if(newdata(1).eq.-10  !  Was 10... 
-         if(newdata(1).eq.-12
+         if(newdata(1).eq.111
      *     )then
 c
 c      The window has been resized.  Draw different size at same resltn

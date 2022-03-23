@@ -1051,14 +1051,14 @@ c
 c 3   continue
 c
 c      nbut=-10 : Exposed
-c      nbut=-12 : Resized
+c      nbut=111 : Resized
 c      nbut=  1 : Button 1
 c      nbut=  2 : Button 2
 c      nbut=  3 : Button 3
 c
 c      End of user interaction - announce the next action
 c
-             if(nbut.eq.-12)write(0,300)ixmp,iymp
+             if(nbut.eq.111)write(0,300)ixmp,iymp
              if(nbut.eq.1  .or.nbut.eq.10)write(0,301)
              if(nbut.eq.2  .or.nbut.eq.11)write(0,302)
              if(nbut.eq.3  .or.nbut.eq.12)write(0,303)
