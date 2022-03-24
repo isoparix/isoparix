@@ -182,11 +182,6 @@ c
 c
 c      Define the boundary lines of the new...
 c
-      if(check
-     *  )then
-             write(lchann,107)nprocess,nproc_orig
-             call isoflush(lchann)
-      endif
       call bound(nprocess)
 c
 c      ...and of the old, if we actually generated anything new...
@@ -195,6 +190,11 @@ c
       if(nnew.gt.0
      *  )then
              call bound(nproc_orig)
+             if(check
+     *         )then
+                    write(lchann,107)nprocess,nproc_orig
+                    call isoflush(lchann)
+              endif
       endif
 c
       return
