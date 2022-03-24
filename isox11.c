@@ -882,14 +882,14 @@ if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is ConfigureNoti
 		 if(event_msg)fprintf(isolog,"Changed window is %d\n",JSWindow);
                  break;
                }
-/*
+
             case PropertyNotify:
                {
 if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is PropertyNotify %d \n",xev.type);
                  *nbut=-9;
                  break;
                }
-*/	       
+	       
 
             case VisibilityNotify:
                {
@@ -928,7 +928,9 @@ if(event_msg)fprintf(isolog,"ISOX11.C: Key %d pressed in x11mouse..!\n",*nbut);
 
             case MotionNotify:
                {
+/*
 if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is MotionNotify %d \n",xev.type);
+*/
                 *nbut=-994;
                 *mousex=xev.xbutton.x;
                 *mousey=xev.xbutton.y;

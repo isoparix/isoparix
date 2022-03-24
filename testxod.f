@@ -6,10 +6,11 @@ c
 c
       call defmap(254,7,iret)    ! Sets colour map
 c
+      open(4,file="testxod.log",form='formatted',status='unknown')
       ixm=800
       iym=600
       maisox=200
-      write(*,102)maisox,isocols,irc
+      write(4,102)maisox,isocols,irc
 c
 c      ..transport cmap params to isox11.c as we open the window...
 c
@@ -40,8 +41,8 @@ c
 c      Issue a blocking call to check mouse or keyboard
 c
   1   continue
-      call x11mouse(nbut,kxcorner,kycorner,ixmp,iymp)
-      write(0,101)nbut,kxcorner,kycorner,ixmp,iymp,ixm,iym
+      call x11mouse(nbut,mousex,mousey,iwidth,iheight)
+      write(4,101)nbut,mousex,mousey,iwidth,iheight
       if(nbut.eq.69
      *  )then
              call x11close()
@@ -51,8 +52,7 @@ c
       endif
 c
 100   format('Stopping with return code:', i6)      
-101   format('PICKER - NBUT:',i5
-     *      ,', KXCORNER:',i5,', KYCORNER:',i5
-     *      ,', IXMP:',i5,', IYMP:',i5,', IXM, IYM',2i5)
+101   format('TESTXOD - NBUT:',i5
+     *      ,', MouseX:',i5,', MouseY:',i5,', Width:',i5,', Height:',i5)
 102   format('MAISOX=',i8,', ISOCOLS=',i8,', RESULT=',i8)
       end

@@ -82,7 +82,7 @@ $(ISOPARIX)/compress_test.exe $(ISOPARIX)/array3D.exe    \
 $(ISOPARIX)/showcube.exe      $(ISOPARIX)/showcubes.exe  \
 $(ISOPARIX)/test_side.exe     $(ISOPARIX)/font_file.exe  \
 $(ISOPARIX)/test_defmap.exe   $(ISOPARIX)/offprep.exe    \
-$(ISOPARIX)/msetview.exe                                 \
+$(ISOPARIX)/msetview.exe      $(ISOPARIX)/testxod.exe    \
 $(ISOPARIX)/fractiler.exe                                \
 $(TOOLS)/barclays_csv.exe     $(TOOLS)/barclays_pdf.exe $(TOOLS)/barclays.exe
 
@@ -310,14 +310,8 @@ $(ISOPARIX)/fractiler.exe: fractiler.o defmap.o read_cmap_params.o tim.o ctim.o 
 $(ISOPARIX)/readbmp.exe: readbmp.o
 	$(LD)  readbmp.o -o $@
 
-#$(ISOPARIX)/showcube.exe: showcube.o $(ARTSTOBJS) $(BMOBJS)
-#$(MPFC) $(PARFLAGS)  showcube.o $(ARTSTOBJS) $(BMOBJS) -o $@ $(LD_X11)
-
-#$(ISOPARIX)/showcubes.exe: showcubes.o $(ARTSTOBJS) $(BMOBJS)
-#$(MPFC) $(PARFLAGS)  showcubes.o $(ARTSTOBJS) $(BMOBJS) -o $@ $(LD_X11)
-
-#$(ISOPARIX)/testxod.exe: testxod.o $(ARTSTOBJS) $(BMOBJS)
-#$(LD)  testxod.o $(ARTSTOBJS) $(BMOBJS) -o $@ $(LD_X11)
+$(ISOPARIX)/testxod.exe: testxod.o $(ARTSTOBJS) $(BMOBJS)
+	$(LD)  testxod.o $(ARTSTOBJS) $(BMOBJS) -o $@ $(LD_X11)
 
 $(ISOPARIX)/showcube.exe: showcube.o $(ARTSTOBJS) $(BMOBJS)
 	$(LD)  showcube.o $(ARTSTOBJS) $(BMOBJS) -o $@ $(LD_X11)
@@ -373,7 +367,7 @@ $(XXSTATIX)/wintext.exe: wintext.o $(STATOBJS) $(COLSTATOBJS) $(BMOBJS)
 $(XXSTATIX)/XConsortium_test.exe: XConsortium_test.o
 	$(LD) XConsortium_test.o -o $@ $(LD_X11)
 
-$(XXSTATIX)/example.exe: example.o
+$(ISOPARIX)/example.exe: example.o
 	$(CC) example.o -o $@ $(LD_X11)
 
 $(XXSTATIX)/svn_calib.exe: svn_calib.o isox11.o
