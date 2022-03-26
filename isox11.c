@@ -887,8 +887,10 @@ if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is ConfigureNoti
                {
 if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is PropertyNotify %d \n",xev.type);
                  *nbut=-9;
+		 /*
 		 *mousex=-900;
 		 *mousey=-900;
+		 */
                  break;
                }
 	       

@@ -32,9 +32,19 @@ c
 c
 c      Issue a blocking call to check mouse or keyboard
 c
+      if(check)write(0,111)nbut,mousex,mousey,iwidth,iheight
+     *                                           ,ixm, iym,resize
       call x11mouse(nbut,mousex,mousey,iwidth,iheight)
       if(check)write(0,101)nbut,mousex,mousey,iwidth,iheight
      *                                           ,ixm, iym,resize
+      if(nbut.eq.-10)go to 2
+      if(nbut.eq.-994.and.resize
+     *  )then
+             nbut=111   !  New resize return code
+             resize=.false.
+             write(0,*)'Returning to resize:',iwidth,iheight
+             return
+      endif
       if(nbut.eq.69)return  ! F3 pressed
       if(nbut.eq.36)nbut=1  ! Enter key proceeds to next picture
       if(nbut.gt.0.and.nbut.le.3    !  For mouse input
@@ -47,20 +57,18 @@ c
              return
       endif
 c
-      if(nbut.eq.-10
+      if(nbut.eq.-12
      *  )then
 c
-c      Window has been exposed, so record details
+c      Window has received ConfigurNotify, so record details
 c
              kxcen=kxold
              kycen=kyold
-             if((ixm.eq.iwidth-1.and.iym.eq.iheight-1).or.
-     *          (ixm.eq.iwidth  .and.iym.eq.iheight  )
+             if(.not.((ixm.eq.iwidth-1.and.iym.eq.iheight-1).or.
+     *                (ixm.eq.iwidth  .and.iym.eq.iheight  ))
      *         )then
+                    resize=.true.
                     go to 2
-                else
-                    nbut=111   !  New resize return code
-                    return
              endif
       endif
 c
@@ -149,7 +157,11 @@ c
 c
 100   format('PICKER - Box resized to ',2i8,'. Centre at',2i8
      *      ,'. IDY=',i8)
-101   format('PICKER - NBUT:',i5
+111   format(/'Before X11M - NBUT:',i5
+     *      ,', MouseX:',i5,', MouseY:',i5
+     *      ,', Width:',i5,', Height:',i5,', IXM, IYM',2i5
+     *      ,' RESIZE:',L2)
+101   format(' After X11M - NBUT:',i5
      *      ,', MouseX:',i5,', MouseY:',i5
      *      ,', Width:',i5,', Height:',i5,', IXM, IYM',2i5
      *      ,' RESIZE:',L2)

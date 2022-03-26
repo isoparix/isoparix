@@ -49,6 +49,12 @@ c
              call x11close()
              stop
          else
+             ncol=ncol+3
+             if(ncol.gt.200)ncol=ncol-80
+             call x11rectgc(%val(ix1),%val(iy1)
+     *                     ,%val(ix2),%val(iy2),%val(ncol))
+             call x11flush()
+             write(*,*)'Colour is:',ncol
              go to 1
       endif
 c
