@@ -10,7 +10,6 @@ c
       ixm=800
       iym=600
       maisox=200
-      write(4,102)maisox,isocols,irc
 c
 c      ..transport cmap params to isox11.c as we open the window...
 c
@@ -26,6 +25,8 @@ c
              write(0,100)irc
              stop
       endif
+c      
+      write(4,102)maisox,isocols,irc
 c
       ix1=ixm/10
       iy1=iym/10

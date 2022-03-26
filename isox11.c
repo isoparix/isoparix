@@ -887,6 +887,8 @@ if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is ConfigureNoti
                {
 if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is PropertyNotify %d \n",xev.type);
                  *nbut=-9;
+		 *mousex=-900;
+		 *mousey=-900;
                  break;
                }
 	       
@@ -895,6 +897,8 @@ if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is PropertyNotif
                {
 if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is VisibilityNotify %d \n",xev.type);
                  *nbut=-8;
+		 *mousex=-800;
+		 *mousey=-800;
                  break;
                }
 
@@ -902,6 +906,8 @@ if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is VisibilityNot
                {
 if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is FocusOut %d \n",xev.type);
                  *nbut=-7;
+		 *mousex=-700;
+		 *mousey=-700;
                  break;
                }
 
@@ -909,6 +915,8 @@ if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is FocusOut %d \
                {
 if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is FocusIn %d \n",xev.type);
                  *nbut=-6;
+		 *mousex=-600;
+		 *mousey=-600;
                  break;
                }
 
@@ -954,6 +962,10 @@ if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is ResizeRequest
                {
 if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is Expose %d \n",xev.type);
                   *nbut=-10; /* Window exposed*/
+                     *mousex=xev.xexpose.x;
+                     *mousey=xev.xexpose.y;
+                     *newx=xev.xexpose.width;
+                     *newy=xev.xexpose.height;
                   break;
                }
  

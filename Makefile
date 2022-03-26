@@ -82,8 +82,8 @@ $(ISOPARIX)/compress_test.exe $(ISOPARIX)/array3D.exe    \
 $(ISOPARIX)/showcube.exe      $(ISOPARIX)/showcubes.exe  \
 $(ISOPARIX)/test_side.exe     $(ISOPARIX)/font_file.exe  \
 $(ISOPARIX)/test_defmap.exe   $(ISOPARIX)/offprep.exe    \
-$(ISOPARIX)/msetview.exe      $(ISOPARIX)/testxod.exe    \
-$(ISOPARIX)/fractiler.exe                                \
+$(ISOPARIX)/msetview.exe                                 \
+$(ISOPARIX)/fractiler.exe     $(ISOPARIX)/testxod.exe    \
 $(TOOLS)/barclays_csv.exe     $(TOOLS)/barclays_pdf.exe $(TOOLS)/barclays.exe
 
 #networks: $(NETWORKS)/links.exe
@@ -367,7 +367,7 @@ $(XXSTATIX)/wintext.exe: wintext.o $(STATOBJS) $(COLSTATOBJS) $(BMOBJS)
 $(XXSTATIX)/XConsortium_test.exe: XConsortium_test.o
 	$(LD) XConsortium_test.o -o $@ $(LD_X11)
 
-$(ISOPARIX)/example.exe: example.o
+$(XXSTATIX)/example.exe: example.o
 	$(CC) example.o -o $@ $(LD_X11)
 
 $(XXSTATIX)/svn_calib.exe: svn_calib.o isox11.o
