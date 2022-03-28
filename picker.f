@@ -11,6 +11,8 @@ c
 c
       character (len=200) selection_message
 c           
+      if(check)write(0,103)
+c           
 c      Initialise box on screen
 c
       idy=.5+(.05*dfloat(iym))
@@ -176,4 +178,7 @@ c
      *       'number: 1 Zoom in; 2 Mandelbrot<->Julia; 3 Back out.',
      *       ' F3 to end.',
      *  3i6,2e26.17,e12.4)
+103   format(/'***********************'
+     *      ,/'*** Entering PICKER ***'
+     *      ,/'***********************',/) 
       end
