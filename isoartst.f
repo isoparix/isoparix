@@ -124,7 +124,7 @@ c     ntag  =MPI_ANY_TAG
      *  )then
              call lts(nbytes)
          else
-c            call microsleep(1000000)
+c            call microsleep(100000)
              nwait=nwait+1
              go to 1
       endif

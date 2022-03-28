@@ -22,6 +22,13 @@ c
       nresize=0
   1   continue
       kd=0
+      if(check
+     *  )then  ! Irrelevant initialisations..
+             mousex=ixm/2
+             mousey=iym/2
+             iwidth =0
+             iheight=0
+      endif
       kxold=kxcen
       kyold=kycen
       idxold=idx
