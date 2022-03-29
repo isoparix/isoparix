@@ -60,7 +60,7 @@ c
 c
       if(resize.and.
      *     (
-c    *      nbut.eq.-994.or.     ! Pointer motion
+     *      nbut.eq.-994.or.     ! Pointer motion
 c    *      nbut.eq.-7  .or.     ! FocusIn
 c    *      nbut.eq.-6  .or.     ! FocusOut
      *      nbut.eq.-10          ! Expose....
