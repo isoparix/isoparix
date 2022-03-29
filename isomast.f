@@ -68,6 +68,14 @@ c
       ixmold=ixm
       iymold=iym
 c
+c      If bisectors, then no cubes...
+c
+      if(nwork.eq.2.and.(kbis.eq.1.or.nbis.eq.1)
+     *  )then
+             write(0,149)
+             nwork=1      ! Squares, not cubes...
+      endif
+c     
       ngrf=len_ngrafout
       minperi=0
       xcen1  =xcen
@@ -1104,5 +1112,10 @@ c
 146   format('##### ERROR in perimeter:',14i6)
 147   format('Perimeter bisector sent: X=',i5,', Y from',i5,' to',i5)
 148   format('Perimeter bisector sent: Y=',i5,', X from',i5,' to',i5)
+149   format(//'***************************'
+     *      ,/'Cannot run cubes AND bisectors.'
+     *      ,'   Work display set to squares'
+     *      ,/'***************************'
+     *      ,//)
 200   format('Perimeter',i4,6i7)
       end
