@@ -70,7 +70,7 @@ c
 c
 c      If bisectors, then no cubes...
 c
-      if(nwork.eq.2.and.(kbis.eq.1.or.nbis.eq.1)
+      if(nwork.eq.2.and.nbis.eq.1
      *  )then
              write(0,149)
              nwork=1      ! Squares, not cubes...
