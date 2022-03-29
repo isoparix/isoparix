@@ -155,11 +155,11 @@ void x11textwin_(int ixm, int iym,char *title_text)
    XMapWindow(isodisplay,TextWindow);
    XStoreName(isodisplay,TextWindow,title_text);
    XSelectInput(isodisplay,TextWindow,
-         ExposureMask      |VisibilityChangeMask| ButtonPressMask
-       | ButtonReleaseMask |KeyPressMask        | PointerMotionMask
-       | FocusChangeMask
-/*     | ButtonReleaseMask | PropertyChangeMask | StructureNotifyMask */
-/*     | ResizeRedirectMask|KeyPressMask        | PointerMotionMask   */
+        VisibilityChangeMask | ButtonPressMask    | FocusChangeMask
+       | ButtonReleaseMask   | KeyPressMask       | PointerMotionMask
+       | ButtonReleaseMask   | PropertyChangeMask | StructureNotifyMask
+       | ResizeRedirectMask  | ExposureMask     
+
                 );
    }/* x11textwin */
 
@@ -289,10 +289,10 @@ XTranslateCoordinates(isodisplay,window,winRoot,0,0
    gcbv.graphics_exposures = False;
    gcwv.graphics_exposures = False;
    XSelectInput(isodisplay,window,
-         ExposureMask       | VisibilityChangeMask| ButtonPressMask
+        VisibilityChangeMask| ButtonPressMask
        | ButtonReleaseMask  | StructureNotifyMask 
        | FocusChangeMask    | KeyPressMask        | PointerMotionMask
-/*     | ResizeRedirectMask | KeyPressMask        | PointerMotionMask | PropertyChangeMask   */
+       | ResizeRedirectMask | PropertyChangeMask  | ExposureMask         
                ); 
    XSetLineAttributes(isodisplay,gcb,0,LineSolid,CapButt,JoinBevel);
    XSetTSOrigin      (isodisplay,gcb,1,1);

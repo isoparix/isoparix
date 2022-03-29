@@ -11,7 +11,7 @@ c
 c
       character (len=200) selection_message
 c           
-      if(check)write(0,103)
+      if(check)write(4,103)
 c           
 c      Initialise box on screen
 c
@@ -36,33 +36,39 @@ c
       idxold=idx
       idyold=idy
       resize=.false.
+      nbut=0
 c
   2   continue
 c
 c      Issue a blocking call to check mouse or keyboard
 c
-      if(check)write(0,111)nbut,mousex,mousey,iwidth,iheight
-     *                                           ,ixm, iym,resize
       call x11mouse(nbut,mousex,mousey,iwidth,iheight)
-      if(check)write(0,101)nbut,mousex,mousey,iwidth,iheight
+      if(check)write(4,101)nbut,mousex,mousey,iwidth,iheight
      *                                           ,ixm, iym,resize
-      if(nbut.eq.-10)go to 2
-      if(nbut.eq.-994.and.resize
-     *  )then
-             nbut=111   !  New resize return code
-             resize=.false.
-             write(0,*)'Returning to resize:',iwidth,iheight
-             return
-      endif
+c
       if(nbut.eq.69)return  ! F3 pressed
       if(nbut.eq.36)nbut=1  ! Enter key proceeds to next picture
-      if(nbut.gt.0.and.nbut.le.3    !  For mouse input
+      if((nbut.gt.0.and.nbut.le.3)    !  For mouse input
      *   .or.
-     *   nbut.ge.10.and.nbut.le.12  !  For keyboard input
+     *   (nbut.ge.10.and.nbut.le.12)  !  For keyboard input
      *  )then
 c
 c      Accept only button-releases...
 c
+             return
+      endif
+c
+      if(resize.and.
+     *     (
+c    *      nbut.eq.-994.or.     ! Pointer motion
+c    *      nbut.eq.-7  .or.     ! FocusIn
+c    *      nbut.eq.-6  .or.     ! FocusOut
+     *      nbut.eq.-10          ! Expose....
+     *     )
+     *  )then
+             nbut=111   !  New resize return code
+             resize=.false.
+             write(4,104)iwidth,iheight
              return
       endif
 c
@@ -76,6 +82,7 @@ c
              if(.not.((ixm.eq.iwidth-1.and.iym.eq.iheight-1).or.
      *                (ixm.eq.iwidth  .and.iym.eq.iheight  ))
      *         )then
+                    write(4,105)iwidth,iheight
                     resize=.true.
                     go to 2
              endif
@@ -181,4 +188,6 @@ c
 103   format(/'***********************'
      *      ,/'*** Entering PICKER ***'
      *      ,/'***********************',/) 
+104   format('Returning to resize:',2i5)
+105   format('   Resizing capture:',2i5)
       end
