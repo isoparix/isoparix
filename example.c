@@ -25,11 +25,16 @@
    s=DefaultScreen(d);
    w=XCreateSimpleWindow(d, RootWindow(d, s), 10, 10, 220, 100, 1,
                          BlackPixel(d, s), WhitePixel(d, s)); /* create window */
-   XSelectInput(d, w, ExposureMask | KeyPressMask);           /* select kind of events we are interested in */
+   XSelectInput(d, w,  ExposureMask       | VisibilityChangeMask | ButtonPressMask
+                     | ButtonReleaseMask  | PropertyChangeMask   | StructureNotifyMask 
+                     | ResizeRedirectMask | KeyPressMask         | KeyReleaseMask | PointerMotionMask
+                     | FocusChangeMask);           /* select kind of events we are interested in */
    XMapWindow(d, w);                                          /* map (show) the window */
    while(1)
       {                                /* event loop */
        XNextEvent(d, &e);
+       printf("Event code is %10d\n",e.type);
+/*       printf("   Event name: %s\n",e.type);  */
        if(e.type==Expose)
          {                             /* draw or redraw the window */
           XFillRectangle(d, w, DefaultGC(d, s), 20, 20, 10, 10);

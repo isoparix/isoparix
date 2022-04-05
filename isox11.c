@@ -860,6 +860,7 @@ void x11mouse_(int *nbut,int *mousex,int *mousey,int *newx,int *newy)
         *nbut=-999;
         event_msg=True;
          XNextEvent(isodisplay,&xev);
+if(event_msg)fprintf(isolog,"ISOX11.C: Next event is %d \n",xev.type);
 /*
 */
          switch (xev.type)
