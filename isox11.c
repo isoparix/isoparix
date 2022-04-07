@@ -292,7 +292,8 @@ XTranslateCoordinates(isodisplay,window,winRoot,0,0
         VisibilityChangeMask | ButtonPressMask | ButtonReleaseMask  
       | StructureNotifyMask  | FocusChangeMask   
       | KeyPressMask         | KeyReleaseMask      | PointerMotionMask
-      | ResizeRedirectMask   | PropertyChangeMask  | ExposureMask         
+/*    | ResizeRedirectMask   | PropertyChangeMask  | ExposureMask */      
+      | ResizeRedirectMask   |                       ExposureMask         
                ); 
    XSetLineAttributes(isodisplay,gcb,0,LineSolid,CapButt,JoinBevel);
    XSetTSOrigin      (isodisplay,gcb,1,1);
