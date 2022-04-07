@@ -7,7 +7,7 @@ c
 c
       logical movie 
 c
-      real(8) told,tnew,diag_delta
+      real(8) told,tnew,diag_delta,theta,phi
 c
       check=.true.
       lchann=10
@@ -62,9 +62,9 @@ c
       call cubeadd(7,      1,-iym/10,ixm/10,     0,60)
       call cubeadd(8,      1,      1,ixm/10,iym/10,80)
 c
-      write(*,104)
-      read(*,*)movie
-c     movie=.true.
+c     write(*,104)
+c     read(*,*)movie
+      movie=.true.
       ibatch=100
       abatch=ibatch
   1   continue

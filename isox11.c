@@ -289,10 +289,10 @@ XTranslateCoordinates(isodisplay,window,winRoot,0,0
    gcbv.graphics_exposures = False;
    gcwv.graphics_exposures = False;
    XSelectInput(isodisplay,window,
-        VisibilityChangeMask| ButtonPressMask
-       | ButtonReleaseMask  | StructureNotifyMask 
-       | FocusChangeMask    | KeyPressMask        | PointerMotionMask
-       | ResizeRedirectMask | PropertyChangeMask  | ExposureMask         
+        VisibilityChangeMask | ButtonPressMask | ButtonReleaseMask  
+      | StructureNotifyMask  | FocusChangeMask   
+      | KeyPressMask         | KeyReleaseMask      | PointerMotionMask
+      | ResizeRedirectMask   | PropertyChangeMask  | ExposureMask         
                ); 
    XSetLineAttributes(isodisplay,gcb,0,LineSolid,CapButt,JoinBevel);
    XSetTSOrigin      (isodisplay,gcb,1,1);
@@ -860,8 +860,8 @@ void x11mouse_(int *nbut,int *mousex,int *mousey,int *newx,int *newy)
         *nbut=-999;
         event_msg=True;
          XNextEvent(isodisplay,&xev);
-if(event_msg)fprintf(isolog,"ISOX11.C: Next event is %d \n",xev.type);
 /*
+if(event_msg)fprintf(isolog,"ISOX11.C: Next event is %d \n",xev.type);
 */
          switch (xev.type)
           {
@@ -928,6 +928,20 @@ XLookupString(&xev.xkey,buffer,MAXLINE,&myKeysym,&myStatus);
 #include "keydefs.h"
                  *nbut=xev.xkey.keycode;
 if(event_msg)fprintf(isolog,"ISOX11.C: Key %d pressed in x11mouse..!\n",*nbut);
+                 *mousex=xev.xkey.x;;
+                 *mousey=xev.xkey.y;
+                 *newx=0;
+                 *newy=0;
+                 break;
+               }
+
+            case KeyRelease:
+               {
+if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is KeyRelease %d \n",xev.type);
+XLookupString(&xev.xkey,buffer,MAXLINE,&myKeysym,&myStatus);
+#include "keydefs.h"
+                 *nbut=xev.xkey.keycode;
+if(event_msg)fprintf(isolog,"ISOX11.C: Key %d released in x11mouse..!\n",*nbut);
                  *mousex=xev.xkey.x;;
                  *mousey=xev.xkey.y;
                  *newx=0;
