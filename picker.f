@@ -6,6 +6,7 @@ c
       use isocomm
 c
       real(8)xcen_box,ycen_box,delta_box,tres,deltay,dx,dy,simin,srmin
+     *      ,t_cn, t_now,t_mouse
 c
       logical resize,newposition
 c
@@ -22,6 +23,7 @@ c
       call x11box(%val(kxcen-idx),%val(kycen-idy)
      *           ,%val(kxcen+idx),%val(kycen+idy))
       nresize=0
+      resize=.false.
   1   continue
       kd=0
       if(check
@@ -35,7 +37,6 @@ c
       kyold=kycen
       idxold=idx
       idyold=idy
-      resize=.false.
       nbut=0
 c
   2   continue
@@ -43,8 +44,14 @@ c
 c      Issue a blocking call to check mouse or keyboard
 c
       call x11mouse(nbut,mousex,mousey,iwidth,iheight)
-      if(check)write(4,101)nbut,mousex,mousey,iwidth,iheight
+      call tim(t_mouse)
+      if(check
+     *  )then
+             write(*,101)t_mouse,nbut,mousex,mousey,iwidth,iheight
      *                                           ,ixm, iym,resize
+             write(4,101)t_mouse,nbut,mousex,mousey,iwidth,iheight
+     *                                           ,ixm, iym,resize
+      endif
 c
       if(nbut.eq.69)return  ! F3 pressed
       if(nbut.eq.36)nbut=1  ! Enter key proceeds to next picture
@@ -58,32 +65,42 @@ c
              return
       endif
 c
-      if(resize.and.
-     *     (
-     *      nbut.eq.-994.or.     ! Pointer motion
-c    *      nbut.eq.-7  .or.     ! FocusIn
-c    *      nbut.eq.-6  .or.     ! FocusOut
-     *      nbut.eq.-10          ! Expose....
-     *     )
+      if(resize
      *  )then
-             nbut=111   !  New resize return code
-             resize=.false.
-             write(4,104)iwidth,iheight
-             return
+             call tim(t_now)
+             if(nbut.eq.-10
+c            if(t_now-t_cn.gt.1.0
+     *         )then
+                    nbut=111   !  New resize return code
+                    resize=.false.
+                    if(check
+     *                )then
+                           write(*,104)iwidth,iheight,t_now
+                           write(4,104)iwidth,iheight,t_now
+                    endif
+                    return
+             endif
       endif
 c
       if(nbut.eq.-12
      *  )then
 c
-c      Window has received ConfigurNotify, so record details
+c      Window has received ConfigureNotify, so record details
 c
              kxcen=kxold
              kycen=kyold
              if(.not.((ixm.eq.iwidth-1.and.iym.eq.iheight-1).or.
      *                (ixm.eq.iwidth  .and.iym.eq.iheight  ))
      *         )then
-                    write(4,105)iwidth,iheight
+                    call tim(t_cn)
+                    iwidthr =iwidth
+                    iheightr=iheight
                     resize=.true.
+                    if(check
+     *                )then
+                           write(*,105)iwidth,iheight,t_cn
+                           write(4,105)iwidth,iheight,t_cn
+                    endif
                     go to 2
              endif
       endif
@@ -158,7 +175,7 @@ c
              xcen_box=srmin+(dx*dfloat(kxcen))
              ycen_box=simin+(dy*dfloat(iym-kycen))
              delta_box=dy*dfloat(2*idy)
-c     write(0,*)ixm,iym,deltay,kxcen,kycen,2*idy
+c     write(*,*)ixm,iym,deltay,kxcen,kycen,2*idy
 c    *         ,xcen_box,ycen_box,delta_box
 c
              write(selection_message,102)kxcen,kycen,2*idy,xcen_box
@@ -177,7 +194,7 @@ c
      *      ,', MouseX:',i5,', MouseY:',i5
      *      ,', Width:',i5,', Height:',i5,', IXM, IYM',2i5
      *      ,' RESIZE:',L2)
-101   format(' After X11M - NBUT:',i5
+101   format(' After X11M: TIME:',f11.5,', NBUT:',i5
      *      ,', MouseX:',i5,', MouseY:',i5
      *      ,', Width:',i5,', Height:',i5,', IXM, IYM',2i5
      *      ,' RESIZE:',L2)
@@ -188,6 +205,6 @@ c
 103   format(/'***********************'
      *      ,/'*** Entering PICKER ***'
      *      ,/'***********************',/) 
-104   format('Returning to resize:',2i5)
-105   format('   Resizing capture:',2i5)
+104   format('Returning to resize:',2i5,' at t=',f11.5,/)
+105   format('   Resizing capture:',2i5,' at t=',f11.5)
       end

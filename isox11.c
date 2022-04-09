@@ -154,11 +154,12 @@ void x11textwin_(int ixm, int iym,char *title_text)
    rectcolor.flags  = DoRed | DoGreen | DoBlue;
    XMapWindow(isodisplay,TextWindow);
    XStoreName(isodisplay,TextWindow,title_text);
+   XSelectInput(isodisplay,winRoot,KeymapStateMask);
    XSelectInput(isodisplay,TextWindow,
         VisibilityChangeMask | ButtonPressMask    | FocusChangeMask
        | ButtonReleaseMask   | KeyPressMask       | PointerMotionMask
        | ButtonReleaseMask   | PropertyChangeMask | StructureNotifyMask
-       | ResizeRedirectMask  | ExposureMask     
+       | ResizeRedirectMask  | ExposureMask       | KeymapStateMask  
 
                 );
    }/* x11textwin */
@@ -850,7 +851,7 @@ void x11mouse_(int *nbut,int *mousex,int *mousey,int *newx,int *newy)
          ExposureMask      |VisibilityChangeMask| ButtonPressMask
        | ButtonReleaseMask | PropertyChangeMask | StructureNotifyMask 
        | ResizeRedirectMask|KeyPressMask        | PointerMotionMask
-       | FocusChangeMask
+       | FocusChangeMask   | KeymapStateMask
 */
      
    {
@@ -860,8 +861,10 @@ void x11mouse_(int *nbut,int *mousex,int *mousey,int *newx,int *newy)
   
         *nbut=-999;
         event_msg=True;
+
          XNextEvent(isodisplay,&xev);
 /*
+        XCheckMaskEvent(isodisplay,StructureNotifyMask,&xev);
 if(event_msg)fprintf(isolog,"ISOX11.C: Next event is %d \n",xev.type);
 */
          switch (xev.type)
@@ -919,6 +922,15 @@ if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is FocusIn %d \n
                  *nbut=-6;
 		 *mousex=-600;
 		 *mousey=-600;
+                 break;
+               }
+
+            case KeymapNotify:
+               {
+if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is KeymapNotify %d \n",xev.type);
+                 *nbut=-5;
+		 *mousex=-500;
+		 *mousey=-500;
                  break;
                }
 
