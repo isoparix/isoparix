@@ -157,7 +157,8 @@ void x11textwin_(int ixm, int iym,char *title_text)
    XSelectInput(isodisplay,winRoot,KeymapStateMask);
    XSelectInput(isodisplay,TextWindow,
         VisibilityChangeMask | ButtonPressMask    | FocusChangeMask
-       | ButtonReleaseMask   | KeyPressMask       | PointerMotionMask
+       | ButtonReleaseMask   | PointerMotionMask  
+    /* | KeyPressMask */       
        | ButtonReleaseMask   | PropertyChangeMask | StructureNotifyMask
        | ResizeRedirectMask  | ExposureMask       | KeymapStateMask  
 
@@ -292,7 +293,8 @@ XTranslateCoordinates(isodisplay,window,winRoot,0,0
    XSelectInput(isodisplay,window,
         VisibilityChangeMask | ButtonPressMask | ButtonReleaseMask  
       | StructureNotifyMask  | FocusChangeMask   
-      | KeyPressMask         | KeyReleaseMask      | PointerMotionMask
+/*    | KeyPressMask  */       
+      | KeyReleaseMask      | PointerMotionMask
 /*    | ResizeRedirectMask   | PropertyChangeMask  | ExposureMask */      
       | ResizeRedirectMask   |                       ExposureMask         
                ); 

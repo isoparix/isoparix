@@ -43,7 +43,7 @@ c      Issue a blocking call to check mouse or keyboard
 c
   1   continue
       call x11mouse(nbut,mousex,mousey,iwidth,iheight)
-      write(4,101)nbut,mousex,mousey,iwidth,iheight
+      write(*,101)nbut,mousex,mousey,iwidth,iheight
       if(nbut.eq.69
      *  )then
              call x11close()
