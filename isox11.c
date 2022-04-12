@@ -157,8 +157,7 @@ void x11textwin_(int ixm, int iym,char *title_text)
    XSelectInput(isodisplay,winRoot,KeymapStateMask);
    XSelectInput(isodisplay,TextWindow,
         VisibilityChangeMask | ButtonPressMask    | FocusChangeMask
-       | ButtonReleaseMask   | PointerMotionMask  
-    /* | KeyPressMask */       
+       | ButtonReleaseMask   | PointerMotionMask  | KeyPressMask       
        | ButtonReleaseMask   | PropertyChangeMask | StructureNotifyMask
        | ResizeRedirectMask  | ExposureMask       | KeymapStateMask  
 
@@ -293,8 +292,7 @@ XTranslateCoordinates(isodisplay,window,winRoot,0,0
    XSelectInput(isodisplay,window,
         VisibilityChangeMask | ButtonPressMask | ButtonReleaseMask  
       | StructureNotifyMask  | FocusChangeMask   
-/*    | KeyPressMask  */       
-      | KeyReleaseMask      | PointerMotionMask
+      | KeyPressMask         | KeyReleaseMask      | PointerMotionMask
 /*    | ResizeRedirectMask   | PropertyChangeMask  | ExposureMask */      
       | ResizeRedirectMask   |                       ExposureMask         
                ); 
@@ -959,8 +957,8 @@ XLookupString(&xev.xkey,buffer,MAXLINE,&myKeysym,&myStatus);
 if(event_msg)fprintf(isolog,"ISOX11.C: Key %d released in x11mouse..!\n",*nbut);
                  *mousex=xev.xkey.x;;
                  *mousey=xev.xkey.y;
-                 *newx=0;
-                 *newy=0;
+                 *newx=-1;
+                 *newy=-1;
                  break;
                }
 
