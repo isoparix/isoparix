@@ -53,19 +53,15 @@ c
      *                                           ,ixm, iym,resize
       endif
 c
-      if(iwidth.eq.0
+      if(nbut.eq.69)return  ! F3 pressed
+      if(nbut.eq.36)nbut=10  ! Enter key proceeds to next picture
+      if((nbut.gt.0.and.nbut.le.3).or. !  For mouse input
+     *   iwidth.eq.0.and.nbut.ge.10.and.nbut.le.12 ! Keyboard input
      *  )then
-             if(nbut.eq.69)return  ! F3 pressed
-             if(nbut.eq.36)nbut=1  ! Enter key proceeds to next picture
-             if((nbut.gt.0.and.nbut.le.3)    !  For mouse input
-     *          .or.
-     *          (nbut.ge.10.and.nbut.le.12) ! Keyboard input
-     *         )then
 c
 c      Accept only button-presses for Man-Julia-Man changes...
 c
                     return
-             endif
       endif
 c
       if(resize

@@ -15,11 +15,14 @@ c
       npixels=0
       nlevels=0
       nscreenpixels=ixm*iym
-c     write(     *,106)iter_lo,iter_hi,nscreenpixels
-c     write(lchann,106)iter_lo,iter_hi,nscreenpixels
+      if(check
+     *  )then
+             write(     *,106)iter_lo,iter_hi,nscreenpixels
+             write(lchann,106)iter_lo,iter_hi,nscreenpixels
+      endif
 c
       if(nscreenpixels.le.0.or.
-     *         iter_hi.le.0.or.
+     *         iter_hi.lt.0.or.
      *       ncolindex.le.0
      *  )then
              write(0     ,111)ixm,iym,nscreenpixels,iter_hi,ncolindex
