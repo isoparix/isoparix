@@ -70,6 +70,8 @@ c
              if(nbut.eq.-10
 c            if(t_now-t_cn.gt.1.0
      *         )then
+                    iwidth=iwidthr
+                    iheight=iheightr
                     nbut=111   !  New resize return code
                     resize=.false.
                     if(check
