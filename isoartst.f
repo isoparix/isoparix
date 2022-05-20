@@ -11,21 +11,18 @@ c
       character (30)date_txt
       character (10)datea,dateb
       character (1) msgtxt(80)
-c
       character (37) label_txt(11)
       character (1) label_chars(0:36,0:10)
       equivalence(label_txt,label_chars)
-c
       character (34) filename
       character (14) outfile
+c
       integer (4) :: it(6)
       integer (4) :: itbis(5)
       integer (8) mhuge,nhuge
-c
+      integer (4) ncolcalc
 c
       dimension newdata(6)
-c
-      integer (4) ncolcalc
 c
       real (8) tt,twork,tend,x,ts,t,td,tistart,tiend
      *        ,xcen,ycen,deltay,cra,cia,dx,dy,simin,srmin
@@ -60,7 +57,7 @@ c
 c
 c      Discover things about the Parallel Environment
 c
-      check=.true.
+c     check=.true.
       role='Artist'
 c
 c      Wait to see who the Master is...
@@ -95,6 +92,7 @@ c      Receive the key parameters....
 c
       nbad=0
       author=.false.
+      cube_logic=.false.
       nbmp=999
       itheta=0
       iphi=30
@@ -102,7 +100,7 @@ c
   1   continue
 c
 c
-      if(calcphase.and.screen_graphics.and.nwork.eq.2
+      if(calcphase.and.screen_graphics.and.cube_logic
      *  )then
              call microsleep(4000)
              itheta=itheta+1
@@ -217,7 +215,7 @@ c
               iter_lo=huge(iter_lo)
               mpels=0
               ntotpels=0
-              call param_list
+              if(check)call param_list
 c
 c      Get the parameters
 c
@@ -234,12 +232,35 @@ c
               mcycle =params(20)+.5
               maptype=params(21)+.5
               minperi=params(22)+.5
+              nbis   =params(23)+.5
+              kbis   =params(24)+.5
               tswirl =params(25)
               tdelay =params(26)*.001
               nwork  =params(27)+.5
               ngfx   =params(28)+.5
 c
+             if(nbis.eq.1
+     *         )then
+                    kbis=1
+                    bisector=.true.
+                    constcol=.true.
+                    cube_logic=.false.
+              endif
+ 
+             if(nwork.eq.1
+     *         )then
+                    square_logic=.true.
+                    cube_logic=.false.
+             endif
+ 
+             if(nwork.eq.2
+     *         )then
+                    cube_logic=.true.
+                    square_logic=.false.
+             endif
+c
               write(60,1011)ixm,iym
+              write(60,1012)bisector,square_logic,cube_logic
               call isoflush(60)
 c
               nerror=0
@@ -268,7 +289,6 @@ c
 c
               if(allocated(mapdata))deallocate(mapdata)
               allocate(mapdata(  ixm  ,  iym  ),stat=ierror)
-c             allocate(mapdata(0:ixm+1,0:iym+1),stat=ierror)
               if(ierror.ne.0)nerror=nerror+100000
               nhuge=ixm*iym
 c
@@ -378,21 +398,7 @@ c                else
 c                    dispnow=.false.
 c             endif
 c
-              if(params(23).gt.0
-     *          )then 
-                     bisector=.true.
-                 else
-                     bisector=.false.
-              endif
-c
-              if(params(24).gt.0
-     *          )then 
-                     constcol=.true.
-                else
-                     constcol=.false.
-              endif
-c
-              if(nwork.eq.2
+              if(cube_logic
      *          )then
 c
 c      Need to scale screen, etc
@@ -608,7 +614,8 @@ c
              call title
              if(check)call statout
 c
-             if(nwork.eq.2.and.
+c            if(nwork.eq.2.and.
+             if(cube_logic.and.
      *          it(4).ge.0 !  Don't try to draw a box on a row or column..
      *         )then
 c
@@ -632,7 +639,8 @@ c
                     call x11flush()
               endif
 c
-             if(nwork.eq.1
+c            if(nwork.eq.1
+             if(square_logic
      *         )then
 c
 c      We're monitoring with squares...
@@ -677,7 +685,7 @@ c
              calcphase=.false.
 c
              if(screen_graphics.and.
-     *          nwork.eq.2
+     *          cube_logic
      *         )then
 c
 c      Everything has been computed, draw the floor on its own
@@ -1039,10 +1047,12 @@ c
              if(screen_graphics
      *         )then
 c
-c      Select the next point by the mouse
+c      Select the next point by the mouse or keyboard
 c
                     call picker(nbut,kxcen,kycen,ixmp,iymp,kdy,dx,dy
      *                         ,simin,srmin)
+                            call x11clearpixmap()
+                            call x11flush()
                 else
                     nbut=-999	!No screen graphics, no autocycle
               endif
@@ -1094,6 +1104,7 @@ c
 100   format('   Bisector from',i3,':',5i5)
 101   format('Work gvn to proc',i3,':',5i5)
 1011  format(8i5)
+1012  format(8l5)
 102   format('Recd',i9,' pels ex',i2,':',i9,' of',i9)
 103   format(i5,' unknown messages received - stopping')
 104   format(z8.8,'.data ')
@@ -1166,6 +1177,7 @@ c
 151   format('mycol(',i3,') is',i4)
 152   format('bmname:',i4,' ',a)
 153   format('Max value of MSET',i10)
+155   format('Bisector, squares, cubes',3l5)
 200   format(5(e24.17,/))
 201   format(a30)
 c

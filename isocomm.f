@@ -87,6 +87,7 @@ c
      *       ,author,constcol,cdiff,msgwaiting,calcphase,ixplane,need
      *       ,lookout,signoff,loadbal,row,good_message,newline
      *       ,screen_graphics,bitmap_graphics,off_graphics,iso_mpi_term
+     *       ,cube_logic,square_logic
 c
 c
       integer dontcare,allmsg,nulltask,allgrp,msglow,msghi

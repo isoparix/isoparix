@@ -64,6 +64,11 @@ c
                     return
       endif
 c
+c      Toggle bisectors, squares, cubes...
+c
+      if(iwidth.eq.-1.and.(nbut.eq.13.or.nbut.eq.14.or.nbut.eq.15)
+     *  )return
+c      
       if(resize
      *  )then
              call tim(t_now)
@@ -208,4 +213,6 @@ c
      *      ,/'***********************',/) 
 104   format('Returning to resize:',2i5,' at t=',f11.5,/)
 105   format('   Resizing capture:',2i5,' at t=',f11.5)
+106   format('Bisector, square_logic, cube_logic:',3l5,': Previous')
+107   format('Bisector, square_logic, cube_logic:',3l5,': Latest',/)
       end

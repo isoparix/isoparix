@@ -57,12 +57,12 @@ c
              tany= phi_inv*sqrt(cn2*rec2)
       endif
 c
-      if(check
-     *  )then
-             write(lchann,1061)xp,yp,zp,xclosest,yclosest,zclosest
-     *                   ,xn,yn,zn,ec2,rec2,cn2,tanx,tany
-             call isoflush(lchann)
-      endif
+c     if(check
+c    *  )then
+c            write(lchann,1061)xp,yp,zp,xclosest,yclosest,zclosest
+c    *                   ,xn,yn,zn,ec2,rec2,cn2,tanx,tany
+c            call isoflush(lchann)
+c     endif
 c
       return
 c

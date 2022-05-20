@@ -52,11 +52,11 @@ c
                 call cubespec(nc)
              enddo
 c
-      if(check
-     *  )then
-             write(lchann,106)xe,ye,ze,rd2,rr2,phi_inv
-             call isoflush(lchann)
-      endif
+c     if(check
+c    *  )then
+c            write(lchann,106)xe,ye,ze,rd2,rr2,phi_inv
+c            call isoflush(lchann)
+c     endif
 c
       return
 c

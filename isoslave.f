@@ -7,7 +7,7 @@ c
       use isocomm
       use parcomm
 c
-      real (8) twork,tworkrec,tidle,tend,tstart
+      real (8) twork,tworkrec,tidle,tend
      *        ,srmin,simin,cra,cia,dx,dy
 c
       integer (4) :: gtemp(20)
@@ -110,7 +110,7 @@ c
       need=.false.
       liminc=.false.
 c
-      call param_list
+      if(check)call param_list
       simin =params( 1)
       srmin =params( 2)
       dy    =params( 3)

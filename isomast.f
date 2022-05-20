@@ -15,7 +15,7 @@ c     character (10) datea,dateb
      *              ,swc,isc,int4in,workarea(6),itbis(5)
      *              ,slavstat(0:511),slavreq(0:511)
 c
-      logical mandel
+      logical mandel,blog,clog,slog
       dimension summdet(0:511,5),newdata(6)
 c
       ldiff=5
@@ -67,14 +67,6 @@ c
      *          ,ntswirl,ntdelay,nwork,n_graphics
       ixmold=ixm
       iymold=iym
-c
-c      If bisectors, then no cubes...
-c
-      if(nwork.eq.2.and.nbis.eq.1
-     *  )then
-             write(0,149)
-             nwork=1      ! Squares, not cubes...
-      endif
 c     
       ngrf=len_ngrafout
       minperi=0
@@ -185,6 +177,14 @@ c
       simin=ycen-(.5_8*deltay)
       srmin=xcen-(.5_8*dx*dfloat(ixm-1))
 c
+      if(nwork.eq.2.and.nbis.eq.1
+     *  )then
+             write(0,154)
+             nbis=0
+             kbis=0
+             nwork=2
+      endif      
+c
       params( 1)=simin      !
       params( 2)=srmin      !
       params( 3)=dy         !
@@ -206,7 +206,7 @@ c
       params(19)=maxcols    !
       params(20)=mcycle     ! 0 for user selection, 1 for automatic recycle
       params(21)=loglin     ! Colour mapping (1=equal_colour, >=2=black/white)
-c     params(22)=minperi    !
+      params(22)=minperi    !
       params(23)=nbis       ! Show bisectors (1=yes, 0=no)
       params(24)=kbis       ! Bisectors in constant colour (1=yes, 0=no) 
       params(25)=ntswirl    ! Swirl period in seconds (0=no swirl)
@@ -218,7 +218,7 @@ c
          params(i)=-999.0
       enddo
 c
-      call param_list  !
+      if(check)call param_list 
 c
 c      send the key parameters....
 c
@@ -226,6 +226,27 @@ c
       if(check)then
                  txtout='Sending key parameters                       '
                  call statout
+      endif
+c
+      if(nbis.eq.1
+     *  )then
+             blog=.true.
+         else
+             blog=.false.
+      endif
+c      
+      if(nwork.eq.1
+     *  )then
+             slog=.true.
+         else
+             slog=.false.
+      endif
+c
+      if(nwork.eq.2
+     *  )then
+             clog=.true.
+         else
+             clog=.false.
       endif
 c
       do itask=0,numtasks-1
@@ -236,6 +257,8 @@ c        if(itask.ne.taskid.and.itask.ne.artist)then !!JSW 31JUL16
 c
             if(check)then
                          write(txtout,108)itask,ntag,ierror
+                         call statout
+                         write(txtout,149)nbis,kbis,blog,slog,clog,nwork
                          call statout
             endif
 c
@@ -429,7 +452,7 @@ c
       endif
 c
       call MPI_probe(source,ntag,icomm,istatus,ierror)
-      call lts(nbytes)
+      call lts(nbytes)   ! tag(14) 'Window is opened'
       nbtotp=nbtotp+nbytes
 c
       if(mpitype.eq.msglow+14
@@ -551,6 +574,8 @@ c
      *            ,istatus,ierror)
          call lts(nbytes)
 c
+c      ########## This (ntag=8) is the end of a picture generation  #########
+c
          if(check
      *     )then
                 write(txtout,127)newdata
@@ -566,7 +591,40 @@ c
                 return
           endif
 c
-c        if(newdata(1).eq.-10  !  Was 10... 
+         if(newdata(1).eq.13
+     *     )then
+                blog=.not.blog
+                nwork=0  !  Blank
+                if(blog
+     *            )then
+                       nbis=1
+                       kbis=1
+                   else
+                       nbis=0
+                       kbis=0
+                endif
+         endif
+c
+         if(newdata(1).eq.14
+     *     )then
+                slog=.not.slog
+                if(slog
+     *            )then
+                       nwork=1  !  Squares
+                endif
+         endif
+c
+         if(newdata(1).eq.15
+     *     )then
+                clog=.not.clog
+                if(clog
+     *            )then
+                       nwork=2  !  Cubes
+                       nbis=0
+                       kbis=0
+                endif
+         endif
+c
          if(newdata(1).eq.111
      *     )then
 c
@@ -1112,10 +1170,11 @@ c
 146   format('##### ERROR in perimeter:',14i6)
 147   format('Perimeter bisector sent: X=',i5,', Y from',i5,' to',i5)
 148   format('Perimeter bisector sent: Y=',i5,', X from',i5,' to',i5)
-149   format(//'***************************'
-     *      ,/'Cannot run cubes AND bisectors.'
-     *      ,'   Work display set to squares'
-     *      ,/'***************************'
+149   format('nbis,kbis,blog,slog,clog,nwork:',2i3,3l3,i3)
+154   format(//'**************************************'
+     *      ,/'Master: Cannot run cubes AND bisectors.'
+     *      ,/'      Work display set to cubes'
+     *      ,/'***************************************'
      *      ,//)
 200   format('Perimeter',i4,6i7)
       end
