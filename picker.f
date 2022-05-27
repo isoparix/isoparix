@@ -72,7 +72,8 @@ c
       if(resize
      *  )then
              call tim(t_now)
-             if(nbut.eq.-10
+             if(nbut.eq.-994
+c            if(nbut.eq.-10
 c            if(t_now-t_cn.gt.1.0
      *         )then
                     iwidth=iwidthr
