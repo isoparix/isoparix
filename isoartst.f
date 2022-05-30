@@ -1068,7 +1068,12 @@ c      nbut=  3 : Button 3
 c
 c      End of user interaction - announce the next action
 c
-             if(nbut.eq.111)write(0,300)ixmp,iymp
+             if(nbut.eq.111
+     *         )then
+                    needwin=.true.
+                    write(0,300)ixmp,iymp
+                    call x11close()
+             endif
              if(nbut.eq.1  .or.nbut.eq.10)write(0,301)
              if(nbut.eq.2  .or.nbut.eq.11)write(0,302)
              if(nbut.eq.3  .or.nbut.eq.12)write(0,303)
@@ -1181,8 +1186,8 @@ c
 200   format(5(e24.17,/))
 201   format(a30)
 c
-300   format(///'*********',/'Window resized to '
-     *    ,i0.0,' x ',i0.0,/'*********',//)
+300   format(///'*********',/'Window closed/resized/recreated/remapped'
+     *      ' to ',i0.0,' x ',i0.0,/'*********',//)
 301   format(///'*********',/'New area selected',/'*********',//)
 302   format(///'*********',/'Mandelbrot <==> Julia swap'
      *        ,/'*********',//)

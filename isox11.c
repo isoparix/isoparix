@@ -883,7 +883,6 @@ if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is ConfigureNoti
                  *newy=xev.xconfigure.height;
 		 JSWindow=xev.xconfigure.window;
 		 if(event_msg)fprintf(isolog,"Changed window is %d\n",JSWindow);
-/* For PJDM */   XMapWindow(isodisplay,window);
                  break;
                }
 
