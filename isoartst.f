@@ -1065,6 +1065,9 @@ c      nbut=111 : Resized
 c      nbut=  1 : Button 1
 c      nbut=  2 : Button 2
 c      nbut=  3 : Button 3
+c      nbut= 13 : Keyboard 4
+c      nbut= 14 : Keyboard 5
+c      nbut= 15 : Keyboard 6
 c
 c      End of user interaction - announce the next action
 c

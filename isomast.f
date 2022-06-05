@@ -611,6 +611,8 @@ c
                 if(slog
      *            )then
                        nwork=1  !  Squares
+                   else
+                       nwork=0  ! No work display
                 endif
          endif
 c
