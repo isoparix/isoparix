@@ -75,7 +75,7 @@ c
              call tim(t_now)
              if(nbut.eq.-994.or.
      *          nbut.eq.-10 .or.
-     *          nbut.eq.-12.and.(t_now-t_cn.gt.0.2)   !  For PJDM
+     *          nbut.eq.-12.and.(t_now-t_cn.gt.0.1)   !  For PJDM
      *         )then
                     iwidth=iwidthr
                     iheight=iheightr

@@ -4,9 +4,9 @@ c
       implicit real(8)(a-h,o-z)
 c
       ixcmax=0
-      ixcmin=1000000
+      ixcmin=10000
       iycmax=0
-      iycmin=1000000
+      iycmin=10000
 c
 c     write(*,105)nlong,(longact(mx),mx=1,nlong)
       if(ye.gt.0)call floorshow

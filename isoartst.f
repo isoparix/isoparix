@@ -736,6 +736,13 @@ c
 c
                     rarea=1./dfloat(ixm*iym)
                     do n=1,nsteps
+cPJDM
+c                   write(6,*) 'PJDM: n, nsteps = ',n,nsteps
+c                   write(6,*) 'PJDM: ixm,iym,rarea = ',ixm,iym,rarea
+c                   write(6,*) 'PJDM: ixcmax,ixcmin,iycmax,iycmin = ',
+c    *                          ixcmax,ixcmin,iycmax,iycmin 
+cPJDM
+
                        t=dsqrt(dfloat((ixcmax-ixcmin+1)
      *                               *(iycmax-iycmin+1))
      *                       *rarea)

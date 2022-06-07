@@ -5,9 +5,9 @@ c
       use isocomm
 c
       ixcmax=0
-      ixcmin=1000000
+      ixcmin=10000
       iycmax=0
-      iycmin=1000000
+      iycmin=10000
 c
       do nc=1,ncubes
                     call drawface(nc,5,facecol(nc),3)
