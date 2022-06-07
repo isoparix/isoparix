@@ -43,6 +43,7 @@ c
 c
 c      Issue a blocking call to check mouse or keyboard
 c
+c     call microsleep(1000)    !  Save CPUs overheating...!
       call x11mouse(nbut,mousex,mousey,iwidth,iheight)
       call tim(t_mouse)
       if(check
@@ -73,7 +74,8 @@ c
      *  )then
              call tim(t_now)
              if(nbut.eq.-994.or.
-     *          nbut.eq.-10
+     *          nbut.eq.-10 .or.
+     *          nbut.eq.-12.and.(t_now-t_cn.gt.0.2)   !  For PJDM
      *         )then
                     iwidth=iwidthr
                     iheight=iheightr
@@ -81,8 +83,8 @@ c
                     resize=.false.
                     if(check
      *                )then
-                           write(*,104)iwidth,iheight,t_now
-                           write(4,104)iwidth,iheight,t_now
+                           write(*,104)iwidth-1,iheight-1,t_now,t_cn
+                           write(4,104)iwidth-1,iheight-1,t_now,t_cn
                     endif
                     return
              endif
@@ -211,7 +213,7 @@ c
 103   format(/'***********************'
      *      ,/'*** Entering PICKER ***'
      *      ,/'***********************',/) 
-104   format('Returning to resize:',2i5,' at t=',f11.5,/)
+104   format('Returning to resize:',2i5,' at t=',2f11.5,/)
 105   format('   Resizing capture:',2i5,' at t=',f11.5)
 106   format('Bisector, square_logic, cube_logic:',3l5,': Previous')
 107   format('Bisector, square_logic, cube_logic:',3l5,': Latest',/)

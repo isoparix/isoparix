@@ -1074,7 +1074,7 @@ c
              if(nbut.eq.111
      *         )then
                     needwin=.true.
-                    write(0,300)ixmp,iymp
+                    write(0,300)ixmp-1,iymp-1
                     call x11close()
              endif
              if(nbut.eq.1  .or.nbut.eq.10)write(0,301)
@@ -1086,8 +1086,8 @@ c
              newdata(1)=nbut
              newdata(2)=kxcen
              newdata(3)=kycen
-             newdata(4)=ixmp
-             newdata(5)=iymp
+             newdata(4)=ixmp-1
+             newdata(5)=iymp-1
              newdata(6)=kdy
              call MPI_send(newdata,6,MPI_INTEGER4
      *                    ,master,ntag,icomm,ierror)

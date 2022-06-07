@@ -594,9 +594,9 @@ c
          if(newdata(1).eq.13
      *     )then
                 blog=.not.blog
-                nwork=0  !  Blank
                 if(blog
      *            )then
+                       if(nwork.eq.2)nwork=0  ! Not bisectors and cubes
                        nbis=1
                        kbis=1
                    else
@@ -624,6 +624,8 @@ c
                        nwork=2  !  Cubes
                        nbis=0
                        kbis=0
+                   else
+                       nwork=0  ! No work display
                 endif
          endif
 c
