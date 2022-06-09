@@ -43,7 +43,7 @@ c
 c
 c      Issue a blocking call to check mouse or keyboard
 c
-c     call microsleep(1000)    !  Save CPUs overheating...!
+c     call microsleep(2000)    !  Save CPUs overheating...?
       call x11mouse(nbut,mousex,mousey,iwidth,iheight)
       call tim(t_mouse)
       if(check

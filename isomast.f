@@ -15,7 +15,8 @@ c     character (10) datea,dateb
      *              ,swc,isc,int4in,workarea(6),itbis(5)
      *              ,slavstat(0:511),slavreq(0:511)
 c
-      logical mandel,blog,clog,slog
+      logical mandel,blog,clog,slog,msgneed
+c
       dimension summdet(0:511,5),newdata(6)
 c
       ldiff=5
@@ -565,10 +566,31 @@ c**********************************************************************
 c
          source=artist  
          ntag  =msglow+8
+         nsleep=500000
          if(check)then
                 txtout='Waiting for a message from the Artist        '
                 call statout
          endif
+c
+ 51   continue         
+c
+c      Non-blocking probe to see if what we're waiting for has arrived.
+c
+         call MPI_iprobe(source,ntag,icomm,msgneed
+     *                  ,istatus,ierror)
+         if(msgneed
+     *     )then
+                call lts(nbytes)
+            else
+                if(check
+     *            )then
+                       write(txtout,142)nsleep
+                       call statout
+                endif
+                call microsleep(nsleep)
+                go to 51
+         endif
+c         
          call MPI_recv(newdata,6,MPI_INTEGER4,source,ntag,icomm
      *            ,istatus,ierror)
          call lts(nbytes)
@@ -1158,6 +1180,7 @@ c
 134   format('Perimeter section completed by',i4,', min',i6)
 135   format('ISC=',i3,'.',5x,'Perimeter minimum now at: ',i6)
 136   format('Work from',i4,' (not requested).  Request',i6)
+142   format('Sleeping for', i9,' microseconds')     
 144   format(
      *       /'+=========== ISOPARIX ==============+'
      *      ,/'* Centre X:',e24.16,' *'
