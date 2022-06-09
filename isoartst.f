@@ -246,13 +246,19 @@ c
                     constcol=.true.
                     cube_logic=.false.
               endif
- 
+c
+             if(nwork.eq.0
+     *         )then
+                    square_logic=.false.
+                    cube_logic=.false.
+             endif
+c
              if(nwork.eq.1
      *         )then
                     square_logic=.true.
                     cube_logic=.false.
              endif
- 
+c
              if(nwork.eq.2
      *         )then
                     cube_logic=.true.
@@ -684,8 +690,7 @@ c
          else
              calcphase=.false.
 c
-             if(screen_graphics.and.
-     *          cube_logic
+             if(screen_graphics.and.cube_logic
      *         )then
 c
 c      Everything has been computed, draw the floor on its own

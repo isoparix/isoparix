@@ -182,7 +182,6 @@ c
              write(0,154)
              nbis=0
              kbis=0
-             nwork=2
       endif      
 c
       params( 1)=simin      !
@@ -597,8 +596,9 @@ c
                 if(blog
      *            )then
                        if(nwork.eq.2)nwork=0  ! Not bisectors and cubes
-                       nbis=1
+                       clog=.false.
                        kbis=1
+                       nbis=1
                    else
                        nbis=0
                        kbis=0
@@ -611,6 +611,7 @@ c
                 if(slog
      *            )then
                        nwork=1  !  Squares
+                       clog=.false.
                    else
                        nwork=0  ! No work display
                 endif
