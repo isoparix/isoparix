@@ -15,6 +15,7 @@ c
       tcpu  =summdet(itask,5)
 c
       telap=tend-tstart
+      if(check)write(0,*)itask,tstart,tend,tidle,twork,tcpu,telap
       ubusy=100.*twork/telap
       ucpu =100.*tcpu/telap
 c

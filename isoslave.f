@@ -21,7 +21,7 @@ c
       write(txtout,140)
       call statout
       quiescent=.false.
-      nsleep=100000
+      nsleep=1000000
       check=.false.
 c
 c      Receive the key parameters....
@@ -43,12 +43,8 @@ c
                     if(check
      *                )then
                            nquiescent=nquiescent+1
-c
-                           if(nquiescent.le.20
-     *                       )then
-                                  write(txtout,142)nsleep
-                                  call statout
-                           endif
+                           write(txtout,142)nsleep,nquiescent
+                           call statout
                     endif
                     call microsleep(nsleep)
              endif
@@ -90,6 +86,7 @@ c
                      write(txtout,110)mpitype,source,nbytes
                      call statout
               endif
+              nquiescent=0
               go to 50
       endif
 c
@@ -424,10 +421,9 @@ c
 c      Deliver final statistics
 c
             ntag=msglow+8
-            call MPI_send(realout,5,MPI_REAL8
-     *                   ,master,ntag,icomm,ierror)
+            call MPI_send(realout,5,MPI_REAL8,master,ntag,icomm,ierror)
 c
-            quiescent=.true.    ! Let this slave sleep whilst the artist works....
+            quiescent=.true. ! Let this slave sleep whilst the artist works....
             nquiescent=0
             go to 50
          endif
@@ -791,7 +787,7 @@ c
 139   format('MSET work',6i6)
 140   format('Main subroutine entered.')
 141   format('MPI_ANY_SOURCE=',i4,', MPI_ANY_TAG=',i4)
-142   format('Sleeping for', i9,' microseconds')
+142   format('Sleeping for',i8,' microseconds',i8)
 143   format('usleep',i8)
 144   format('Params received: Master is',i3,', Artist is',i3)
 14500 format('                 ix        iy         n      ndet')

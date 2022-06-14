@@ -539,9 +539,12 @@ c
             summdet(source,i)=realin(i)
          enddo
 c
-         if(check)then
-                      write(txtout,115)nstats,(realin(mx),mx=1,5)
-                      call statout
+         if(check
+     *     )then
+c               write(txtout,115)nstats,(realin(mx),mx=1,5)
+c               call statout
+                write(txtout,1151)(summdet(source,mx),mx=1,5)
+                call statout
          endif
 c
 c      Print the Artist's stats now
@@ -566,7 +569,8 @@ c**********************************************************************
 c
          source=artist  
          ntag  =msglow+8
-         nsleep=500000
+         nsleep=1000000
+         nquiescent=0
          if(check)then
                 txtout='Waiting for a message from the Artist        '
                 call statout
@@ -584,9 +588,10 @@ c
             else
                 if(check
      *            )then
-                       write(txtout,142)nsleep
+                       write(txtout,142)nsleep,nquiescent
                        call statout
                 endif
+                nquiescent=nquiescent+1
                 call microsleep(nsleep)
                 go to 51
          endif
@@ -871,7 +876,6 @@ c**********************************************************************
 c
       if(isc.eq.nslaves.and.swc.eq.0)then
          if(npels.eq.maxpels.and.nstats.eq.isc)then
-c                                tiend=timef()
                                  call tim(tend)
                                  tiend=tend
                                  tcpu =(tiend-tistart)*.01
@@ -1144,7 +1148,8 @@ c
 112   format('Odd msg from source',i3,', type',i2,', length',i7)
 113   format('Excess pels: Recd',i13,', expected',i13)
 114   format('Signing off slaves - received ',i14,' pels')
-115   format('St',i3,5f8.1)
+115   format('St',i3,2f8.1,3f8.5)
+1151  format('St SD',2f8.1,3f8.5)
 116   format('Artist stats')
 119   format('ARTIST task is:',i4)
 120   format(//20('='),' End of program - summary statistics ',19('=')
@@ -1180,7 +1185,7 @@ c
 134   format('Perimeter section completed by',i4,', min',i6)
 135   format('ISC=',i3,'.',5x,'Perimeter minimum now at: ',i6)
 136   format('Work from',i4,' (not requested).  Request',i6)
-142   format('Sleeping for', i9,' microseconds')     
+142   format('Sleeping for',i8,' microseconds',i8)     
 144   format(
      *       /'+=========== ISOPARIX ==============+'
      *      ,/'* Centre X:',e24.16,' *'
