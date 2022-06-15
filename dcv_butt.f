@@ -159,7 +159,7 @@ c      The exit button
 c
                             updown(kbutton)=-1
                             call draw_butt(kbutton)
-                            call microsleep(300000)
+                            call micropause(300000)
                             stop
                      endif
 c
@@ -171,7 +171,7 @@ c
                             updown(kbutton)=-1
                             call draw_butt(kbutton)
                             call dcv_activate(kbutton)
-                            call microsleep(300000)
+                            call micropause(300000)
                             updown(kbutton)=1
                             call draw_butt(kbutton)
                             go to 3
@@ -217,7 +217,7 @@ c
              iyrow2=mousey+idelta
       endif
 c
-c     call microsleep(100000)
+c     call micropause(100000)
 c     call read_dcv_state
 c     call assess_dcv_state
 c     if(state_change

@@ -64,7 +64,7 @@ c
 c
       call x11updatezone(%val(ixb)   ,%val(button_line)
      *                  ,%val(ixtxt2),%val(button_line+butt_height))
-c     call microsleep(100000)
+c     call micropause(100000)
 c
       return
 c

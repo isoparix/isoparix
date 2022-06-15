@@ -40,7 +40,7 @@ c     call statout
 c
       if(iso_mpi_term)call mpirelease
 c
-      call microsleep(nsleep)    !  Sleep to let everyone catch up
+      call micropause(nsleep)    !  Sleep to let everyone catch up
       call MPI_finalize(ierror)
       stop
 c

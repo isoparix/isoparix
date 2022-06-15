@@ -155,7 +155,7 @@ c
          call x11line(%val(ixcentre),%val(iycentre)
      *               ,%val(iqx(n)),%val(iqy(n)),%val(1))   ! Line OQ
          call x11flush() 
-c        call microsleep(50000)
+c        call micropause(50000)
 c
          call x11blackline(%val(iqx(n)),%val(iqy(n))
      *               ,%val(ipx(n)),%val(ipy(n)))

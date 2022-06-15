@@ -21,7 +21,7 @@ c
       write(txtout,140)
       call statout
       quiescent=.false.
-      nsleep=1000000
+      nsleep=1
       check=.false.
 c
 c      Receive the key parameters....
@@ -46,8 +46,7 @@ c
                            write(txtout,142)nsleep,nquiescent
                            call statout
                     endif
-                    call sleep(1)
-c                   call microsleep(nsleep)
+                    call sleep(nsleep)
              endif
 c
              go to 50
@@ -483,7 +482,6 @@ c
      *        )then
                    write(txtout,1052)(lindet(mx,1),mx=1,5)
                    call statout
-                   call sleep (2)
                    go to 999
             endif
 c
@@ -513,7 +511,6 @@ c
      *        )then
                    write(txtout,1051)ndet,2*(nx+ny),nx,ny
                    call statout
-                   call sleep (2)
                    go to 999
             endif
 c
@@ -788,8 +785,7 @@ c
 139   format('MSET work',6i6)
 140   format('Main subroutine entered.')
 141   format('MPI_ANY_SOURCE=',i4,', MPI_ANY_TAG=',i4)
-142   format('Sleeping for',i8,' microseconds',i8)
-143   format('usleep',i8)
+142   format('Sleeping for ',i0.0,' seconds',i8)
 144   format('Params received: Master is',i3,', Artist is',i3)
 14500 format('                 ix        iy         n      ndet')
 145   format('Giftwork:',4i10)

@@ -569,7 +569,7 @@ c**********************************************************************
 c
          source=artist  
          ntag  =msglow+8
-         nsleep=1000000
+         nsleep=1
          nquiescent=0
          if(check)then
                 txtout='Waiting for a message from the Artist        '
@@ -592,8 +592,7 @@ c
                        call statout
                 endif
                 nquiescent=nquiescent+1
-                call      sleep(1)
-c               call microsleep(nsleep)
+                call      sleep(nsleep)
                 go to 51
          endif
 c         
@@ -1186,7 +1185,7 @@ c
 134   format('Perimeter section completed by',i4,', min',i6)
 135   format('ISC=',i3,'.',5x,'Perimeter minimum now at: ',i6)
 136   format('Work from',i4,' (not requested).  Request',i6)
-142   format('Sleeping for',i8,' microseconds',i8)     
+142   format('Sleeping for ',i0.0,' seconds ',i8)     
 144   format(
      *       /'+=========== ISOPARIX ==============+'
      *      ,/'* Centre X:',e24.16,' *'

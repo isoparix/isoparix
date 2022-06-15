@@ -199,7 +199,7 @@ COLSTATOBJS = amedian.o arrows.o button_action.o button_setup.o buttons.o \
               text_line.o tim.o title_rates.o winset.o win_type.o \
               locate_button.f
 
-BMOBJS = bmp_comms.o microsleep.o array2bmp.o compressor.o \
+BMOBJS = bmp_comms.o micropause.o array2bmp.o compressor.o \
          label_maker.o samewrite.o diffwrite.o adintel2.o adintel4.o \
 	 rgbindex.o greymap.o get_font.o text_writer.o
 
@@ -277,8 +277,8 @@ $(ISOPARIX)/test_side.exe: test_side.o side_calc.o
 $(ISOPARIX)/fpi.exe:   fpi.o $(PAROBJS)
 	$(MPFC) $(PARFLAGS) fpi.o -o $@ $(LD_MPI)
 
-$(ISOPARIX)/test_mpi.exe:   test_mpi.o $(PAROBJS)           microsleep.o tim.o ctim.o isocomm.o isoflush.o
-	$(MPFC) $(PARFLAGS) test_mpi.o $(PAROBJS) statout.o microsleep.o tim.o ctim.o isocomm.o isoflush.o  -o $@ $(LD_MPI)
+$(ISOPARIX)/test_mpi.exe:   test_mpi.o $(PAROBJS)           micropause.o tim.o ctim.o isocomm.o isoflush.o
+	$(MPFC) $(PARFLAGS) test_mpi.o $(PAROBJS) statout.o micropause.o tim.o ctim.o isocomm.o isoflush.o  -o $@ $(LD_MPI)
 
 $(ISOPARIX)/compress_test.exe: compress_test.o $(ARTSTOBJS) $(BMOBJS)
 	$(MPFC) $(PARFLAGS) compress_test.o $(ARTSTOBJS) $(BMOBJS) -o $@ $(LD_X11)
@@ -343,8 +343,8 @@ $(XXSTATIX)/iostat.exe:   iostat.o $(STATOBJS)
 $(XXSTATIX)/summan.exe:	summan.o $(STATOBJS)
 	$(LD)  	summan.o $(STATOBJS) -o $@
 
-$(XXSTATIX)/data_generator.exe:	isoflush.o dg.o data_generator.o tim.o ctim.o microsleep.o remblanks.o data_gen.o
-	$(LD)  	isoflush.o dg.o data_generator.o tim.o ctim.o microsleep.o remblanks.o data_gen.o -o $@
+$(XXSTATIX)/data_generator.exe:	isoflush.o dg.o data_generator.o tim.o ctim.o micropause.o remblanks.o data_gen.o
+	$(LD)  	isoflush.o dg.o data_generator.o tim.o ctim.o micropause.o remblanks.o data_gen.o -o $@
 
 $(XXSTATIX)/recsum.exe:	recsum.o $(STATOBJS)
 	$(LD)  	recsum.o $(STATOBJS) -o $@

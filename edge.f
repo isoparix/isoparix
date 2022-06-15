@@ -115,7 +115,7 @@ c      Display what's going on, and check for exposures...
 c
                 call title
                 do mx=1,10
-                   call microsleep(100000)
+                   call micropause(100000)
                    call x11spotbutton(ja,jb,jc)
                 enddo
              enddo

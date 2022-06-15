@@ -102,7 +102,7 @@ c
 c
       if(calcphase.and.screen_graphics.and.cube_logic
      *  )then
-             call microsleep(4000)
+             call micropause(4000)
              itheta=itheta+1
              call eyepoint(diagonal,real(itheta,8),real(iphi,8))
              call x11clearpixmap() 
@@ -735,7 +735,7 @@ c
                        call x11clearpixmap() 
                        call flooralone
                        call x11flush()
-                       call microsleep(80000)
+                       call micropause(80000)
                     enddo
 c
                     rarea=1./dfloat(ixm*iym)
