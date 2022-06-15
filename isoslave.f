@@ -46,7 +46,8 @@ c
                            write(txtout,142)nsleep,nquiescent
                            call statout
                     endif
-                    call microsleep(nsleep)
+                    call sleep(1)
+c                   call microsleep(nsleep)
              endif
 c
              go to 50
@@ -482,7 +483,7 @@ c
      *        )then
                    write(txtout,1052)(lindet(mx,1),mx=1,5)
                    call statout
-                   call system('sleep 2')
+                   call sleep (2)
                    go to 999
             endif
 c
@@ -512,7 +513,7 @@ c
      *        )then
                    write(txtout,1051)ndet,2*(nx+ny),nx,ny
                    call statout
-                   call system('sleep 2')
+                   call sleep (2)
                    go to 999
             endif
 c

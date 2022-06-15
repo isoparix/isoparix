@@ -122,7 +122,6 @@ c     ntag  =MPI_ANY_TAG
      *  )then
              call lts(nbytes)
          else
-c            call microsleep(100000)
              nwait=nwait+1
              go to 1
       endif
@@ -763,8 +762,6 @@ c                      yoffset=yoffset*ar
                     enddo
              endif
 c
-c     call system('sleep 1')
-c
 c      Build equal-area colour maps and draw the final pictures!
 c
       if(screen_graphics
@@ -841,7 +838,6 @@ c                                write(0,*)mx,(x_prim(i,my),my=1,7)
                    endif
                 enddo
                 call x11flush()
-c               call system('sleep 1')
              enddo
       endif
 c

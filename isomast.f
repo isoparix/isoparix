@@ -592,7 +592,8 @@ c
                        call statout
                 endif
                 nquiescent=nquiescent+1
-                call microsleep(nsleep)
+                call      sleep(1)
+c               call microsleep(nsleep)
                 go to 51
          endif
 c         
