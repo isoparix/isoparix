@@ -96,7 +96,7 @@ c
          do n=1,ibatch
              if(movie
      *         )then
-                    call micropause(ndelay)
+                    call nanopause(ndelay)
 c                   call x11sync()
                     theta=theta+theta_delta
 c                   phi=phi+phi_delta

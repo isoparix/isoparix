@@ -142,7 +142,7 @@ c
 c
 c
   4   continue
-      call micropause(100000)
+      call nanopause(100000)
       call x11mouse(nbut,mousex,mousey,idummx,idummy)
       if(nbut.eq.-10)go to 5 
       if(nbut.eq.-1)stop 

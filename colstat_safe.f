@@ -483,7 +483,7 @@ c                   write(*,801)nsleeps,idle_sleep,nsleeps*idle_sleep
 c    *                         ,nrtotal
                     do n=1,nsleeps
                        call buttons(.false.)
-                       call micropause(idle_sleep)
+                       call nanopause(idle_sleep)
                     enddo
              endif
 c

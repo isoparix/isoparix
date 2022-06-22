@@ -193,17 +193,17 @@ STATOBJS = add_toc_item.o addutil.o allcomms.o bar.o close_lists.o convrec.o \
 	   isoflush.o
 
 COLSTATOBJS = amedian.o arrows.o button_action.o button_setup.o buttons.o \
-              column_set.o ctim.o draw_butt.o draw_ruler.o host_input.o \
+              column_set.o ns.o ctim.o draw_butt.o draw_ruler.o host_input.o \
               isox11.o make_button.o makemap.o paint_all.o paint_hosts.o \
               paint_map.o paint_prep.o select_view.o start_win.o \
               text_line.o tim.o title_rates.o winset.o win_type.o \
               locate_button.f
 
-BMOBJS = bmp_comms.o micropause.o array2bmp.o compressor.o \
+BMOBJS = bmp_comms.o nanopause.o array2bmp.o compressor.o \
          label_maker.o samewrite.o diffwrite.o adintel2.o adintel4.o \
 	 rgbindex.o greymap.o get_font.o text_writer.o
 
-DAOBJS = ctim.o da_blksize.o da_close.o da_init.o da_open.o darread.o \
+DAOBJS = ns.o ctim.o da_blksize.o da_close.o da_init.o da_open.o darread.o \
          darupdt.o dasread.o da_txfer.o dawrite.o ddread.o \
          ddwrite.o kxgen.o mountpt.o nextrnd.o taperead.o \
          tapewrite.o tdelta.o tim.o unremount.o isoflush.o dacomm.o
@@ -213,7 +213,7 @@ SLAVEOBJS = box.o bisbox.o linout.o minit.o filler.o rectput.o grafout.o \
 
 MASTOBJS = summline.o artist_wait.o side_calc.o
 
-ARTSTOBJS = axes.o bound.o cept.o cosrule.o ctim.o cubeadd.o cubecheck.o \
+ARTSTOBJS = axes.o bound.o cept.o cosrule.o ns.o ctim.o cubeadd.o cubecheck.o \
             cubeinit.o cubelist.o cubespec.o cubesplit.o datout.o \
             deconx.o defmap.o drawcube.o drawface.o edge.o \
             equalcol.o eyepoint.o flooralone.o floorshow.o hidrem.o \
@@ -277,8 +277,8 @@ $(ISOPARIX)/test_side.exe: test_side.o side_calc.o
 $(ISOPARIX)/fpi.exe:   fpi.o $(PAROBJS)
 	$(MPFC) $(PARFLAGS) fpi.o -o $@ $(LD_MPI)
 
-$(ISOPARIX)/test_mpi.exe:   test_mpi.o $(PAROBJS)           micropause.o tim.o ctim.o isocomm.o isoflush.o
-	$(MPFC) $(PARFLAGS) test_mpi.o $(PAROBJS) statout.o micropause.o tim.o ctim.o isocomm.o isoflush.o  -o $@ $(LD_MPI)
+$(ISOPARIX)/test_mpi.exe:   test_mpi.o $(PAROBJS)           nanopause.o tim.o ns.o ctim.o isocomm.o isoflush.o
+	$(MPFC) $(PARFLAGS) test_mpi.o $(PAROBJS) statout.o nanopause.o tim.o ns.o ctim.o isocomm.o isoflush.o  -o $@ $(LD_MPI)
 
 $(ISOPARIX)/compress_test.exe: compress_test.o $(ARTSTOBJS) $(BMOBJS)
 	$(MPFC) $(PARFLAGS) compress_test.o $(ARTSTOBJS) $(BMOBJS) -o $@ $(LD_X11)
@@ -304,8 +304,8 @@ $(ISOPARIX)/font_file.exe: font_file.o
 $(ISOPARIX)/font_read.exe: font_read.o 
 	$(LD)  font_read.o -o $@
 
-$(ISOPARIX)/fractiler.exe: fractiler.o defmap.o read_cmap_params.o tim.o ctim.o isoflush.o isocomm.o $(BMOBJS)
-	$(LD)  fractiler.o defmap.o read_cmap_params.o tim.o ctim.o isoflush.o isocomm.o $(BMOBJS) -o $@
+$(ISOPARIX)/fractiler.exe: fractiler.o defmap.o read_cmap_params.o tim.o ns.o ctim.o isoflush.o isocomm.o $(BMOBJS)
+	$(LD)  fractiler.o defmap.o read_cmap_params.o tim.o ns.o ctim.o isoflush.o isocomm.o $(BMOBJS) -o $@
 
 $(ISOPARIX)/readbmp.exe: readbmp.o
 	$(LD)  readbmp.o -o $@
@@ -343,8 +343,8 @@ $(XXSTATIX)/iostat.exe:   iostat.o $(STATOBJS)
 $(XXSTATIX)/summan.exe:	summan.o $(STATOBJS)
 	$(LD)  	summan.o $(STATOBJS) -o $@
 
-$(XXSTATIX)/data_generator.exe:	isoflush.o dg.o data_generator.o tim.o ctim.o micropause.o remblanks.o data_gen.o
-	$(LD)  	isoflush.o dg.o data_generator.o tim.o ctim.o micropause.o remblanks.o data_gen.o -o $@
+$(XXSTATIX)/data_generator.exe:	isoflush.o dg.o data_generator.o tim.o ns.o ctim.o nanopause.o remblanks.o data_gen.o
+	$(LD)  	isoflush.o dg.o data_generator.o tim.o ns.o ctim.o nanopause.o remblanks.o data_gen.o -o $@
 
 $(XXSTATIX)/recsum.exe:	recsum.o $(STATOBJS)
 	$(LD)  	recsum.o $(STATOBJS) -o $@
@@ -442,8 +442,8 @@ $(DATEST)/inverter.exe:	inverter.o
 $(DATEST)/fosy01.exe: fosy01.o ${DAOBJS}
 	$(LD) fosy01.o ${DAOBJS} -o $@
 
-$(XXSTATIX)/iowc.exe: iowc.o ctim.o tim.o
-	$(LD) iowc.o ctim.o tim.o  -o $@
+$(XXSTATIX)/iowc.exe: iowc.o ns.o ctim.o tim.o
+	$(LD) iowc.o ns.o ctim.o tim.o  -o $@
 
 $(SURF)/shine.exe: shine.o 
 	$(LD) shine.o -o $@
@@ -451,14 +451,14 @@ $(SURF)/shine.exe: shine.o
 $(SURF)/shinebmp.exe: shinebmp.o $(BMOBJS) $(ARTSTOBJS)
 	$(LD) shinebmp.o $(BMOBJS)  $(ARTSTOBJS) -o $@ $(LD_X11)
 
-$(SURF)/sf_explore.exe: sf_explore.o $(SURFOBJS) tim.o ctim.o
-	$(LD) sf_explore.o $(SURFOBJS) tim.o ctim.o -o $@ $(LD_X11)
+$(SURF)/sf_explore.exe: sf_explore.o $(SURFOBJS) tim.o ns.o ctim.o
+	$(LD) sf_explore.o $(SURFOBJS) tim.o ns.o ctim.o -o $@ $(LD_X11)
 
-$(SURF)/surf.exe: surf.o $(SURFOBJS) tim.o ctim.o
-	$(LD) surf.o $(SURFOBJS) tim.o ctim.o -o $@ $(LD_X11)
+$(SURF)/surf.exe: surf.o $(SURFOBJS) tim.o ns.o ctim.o
+	$(LD) surf.o $(SURFOBJS) tim.o ns.o ctim.o -o $@ $(LD_X11)
 
-$(SURF)/mixer.exe: mixer.o $(SURFOBJS) tim.o ctim.o
-	$(LD) mixer.o $(SURFOBJS) tim.o ctim.o -o $@ $(LD_X11)
+$(SURF)/mixer.exe: mixer.o $(SURFOBJS) tim.o ns.o ctim.o
+	$(LD) mixer.o $(SURFOBJS) tim.o ns.o ctim.o -o $@ $(LD_X11)
 
 $(SURF)/translator.exe: translator.o $(SURFOBJS)
 	$(LD) translator.o $(SURFOBJS) -o $@
@@ -530,41 +530,41 @@ $(TOOLS)/rot_geom.exe: rot_geom.o
 $(TOOLS)/pythag.exe: pythag.o pyth.o
 	$(LD) pythag.o pyth.o -o $@
 
-$(SLIDES)/mask_test.exe: mask_test.o tim.o ctim.o isoflush.o $(BMOBJS) $(IPOBJS)
-	$(LD) mask_test.o tim.o ctim.o isoflush.o $(BMOBJS) $(IPOBJS) -o $@
+$(SLIDES)/mask_test.exe: mask_test.o tim.o ns.o ctim.o isoflush.o $(BMOBJS) $(IPOBJS)
+	$(LD) mask_test.o tim.o ns.o ctim.o isoflush.o $(BMOBJS) $(IPOBJS) -o $@
 
-$(SLIDES)/ip_tiler.exe: ip_tiler.o $(IPOBJS) ctim.o tim.o isoflush.o $(BMOBJS)
-	$(LD) ip_tiler.o $(IPOBJS) ctim.o tim.o isoflush.o $(BMOBJS) -o $@
+$(SLIDES)/ip_tiler.exe: ip_tiler.o $(IPOBJS) ns.o ctim.o tim.o isoflush.o $(BMOBJS)
+	$(LD) ip_tiler.o $(IPOBJS) ns.o ctim.o tim.o isoflush.o $(BMOBJS) -o $@
 
-$(SLIDES)/ip_greyscale.exe: ip_greyscale.o $(IPOBJS) ctim.o tim.o isoflush.o $(BMOBJS)
-	$(LD) ip_greyscale.o $(IPOBJS) ctim.o tim.o isoflush.o $(BMOBJS) -o $@
+$(SLIDES)/ip_greyscale.exe: ip_greyscale.o $(IPOBJS) ns.o ctim.o tim.o isoflush.o $(BMOBJS)
+	$(LD) ip_greyscale.o $(IPOBJS) ns.o ctim.o tim.o isoflush.o $(BMOBJS) -o $@
 
-$(TOOLS)/ip_slopes.exe: ip_slopes.o $(IPOBJS) ctim.o tim.o isoflush.o $(BMOBJS)
-	$(LD) ip_slopes.o $(IPOBJS) ctim.o tim.o isoflush.o $(BMOBJS) -o $@
+$(TOOLS)/ip_slopes.exe: ip_slopes.o $(IPOBJS) ns.o ctim.o tim.o isoflush.o $(BMOBJS)
+	$(LD) ip_slopes.o $(IPOBJS) ns.o ctim.o tim.o isoflush.o $(BMOBJS) -o $@
 
 $(TOOLS)/ip_fft_testbed.exe: ip_fft_testbed.o $(BMOBJS) $(IPOBJS) $(FFTOBJS)
-	$(LD) ip_fft_testbed.o  ctim.o tim.o isoflush.o $(BMOBJS) $(IPOBJS) $(FFTOBJS) -o $@
+	$(LD) ip_fft_testbed.o  ns.o ctim.o tim.o isoflush.o $(BMOBJS) $(IPOBJS) $(FFTOBJS) -o $@
 
 $(TOOLS)/ip_fft.exe: ip_fft.o $(BMOBJS) $(IPOBJS) $(FFTOBJS)
-	$(LD) ip_fft.o  ctim.o tim.o isoflush.o $(BMOBJS) $(IPOBJS) $(FFTOBJS) -o $@
+	$(LD) ip_fft.o  ns.o ctim.o tim.o isoflush.o $(BMOBJS) $(IPOBJS) $(FFTOBJS) -o $@
 
 #$(TOOLS)/FFT_control.exe: FFT_control.o $(FFTOBJS)
 #	$(LD) FFT_control.o $(FFTOBJS) -o $@
 
 $(TOOLS)/FFT.exe: FFT.o $(BMOBJS) $(IPOBJS) $(FFTOBJS)
-	$(LD) FFT.o  ctim.o tim.o isoflush.o $(BMOBJS) $(IPOBJS) $(FFTOBJS) -o $@
+	$(LD) FFT.o  ns.o ctim.o tim.o isoflush.o $(BMOBJS) $(IPOBJS) $(FFTOBJS) -o $@
 
-$(TOOLS)/ip_master.exe: ip_master.o $(IPOBJS) ctim.o tim.o isoflush.o $(BMOBJS)
-	$(LD) ip_master.o $(IPOBJS) ctim.o tim.o isoflush.o $(BMOBJS) -o $@
+$(TOOLS)/ip_master.exe: ip_master.o $(IPOBJS) ns.o ctim.o tim.o isoflush.o $(BMOBJS)
+	$(LD) ip_master.o $(IPOBJS) ns.o ctim.o tim.o isoflush.o $(BMOBJS) -o $@
 
-$(TOOLS)/resolution.exe: resolution.o $(IPOBJS) ctim.o tim.o isoflush.o $(BMOBJS)
-	$(LD) resolution.o $(IPOBJS) ctim.o tim.o isoflush.o $(BMOBJS) -o $@
+$(TOOLS)/resolution.exe: resolution.o $(IPOBJS) ns.o ctim.o tim.o isoflush.o $(BMOBJS)
+	$(LD) resolution.o $(IPOBJS) ns.o ctim.o tim.o isoflush.o $(BMOBJS) -o $@
 
-$(TOOLS)/img_mult.exe: img_mult.o $(IPOBJS) ctim.o tim.o isoflush.o $(BMOBJS)
-	$(LD) img_mult.o $(IPOBJS) ctim.o tim.o isoflush.o $(BMOBJS) -o $@
+$(TOOLS)/img_mult.exe: img_mult.o $(IPOBJS) ns.o ctim.o tim.o isoflush.o $(BMOBJS)
+	$(LD) img_mult.o $(IPOBJS) ns.o ctim.o tim.o isoflush.o $(BMOBJS) -o $@
 
-$(TOOLS)/solar_master.exe: solar_master.o $(IPOBJS) xxstatmap.o ctim.o tim.o isoflush.o $(BMOBJS)
-	$(LD) solar_master.o $(IPOBJS) xxstatmap.o ctim.o tim.o isoflush.o $(BMOBJS) -o $@
+$(TOOLS)/solar_master.exe: solar_master.o $(IPOBJS) xxstatmap.o ns.o ctim.o tim.o isoflush.o $(BMOBJS)
+	$(LD) solar_master.o $(IPOBJS) xxstatmap.o ns.o ctim.o tim.o isoflush.o $(BMOBJS) -o $@
 
 $(TOOLS)/dofor.exe: dofor.o 
 	$(LD) dofor.o -o $@
@@ -674,11 +674,11 @@ $(TOOLS)/pivot_graph.exe: extension.o cosrule.o pivot_graph.o $(GRAPHOBJS) $(AND
 $(TOOLS)/elevation.exe: elevation.o $(GRAPHOBJS)  
 	$(LD) elevation.o $(GRAPHOBJS) -o $@
 
-$(TOOLS)/test_card.exe: test_card.o ctim.o isoflush.o tim.o $(BMOBJS)
-	$(LD) test_card.o ctim.o isoflush.o tim.o $(BMOBJS) -o $@ $(LD_X11)
+$(TOOLS)/test_card.exe: test_card.o ns.o ctim.o isoflush.o tim.o $(BMOBJS)
+	$(LD) test_card.o ns.o ctim.o isoflush.o tim.o $(BMOBJS) -o $@ $(LD_X11)
 
-$(TOOLS)/latitude_slope.exe: latitude_slope.o ctim.o isoflush.o tim.o cept.o slope.o $(BMOBJS)
-	$(LD) latitude_slope.o  ctim.o isoflush.o tim.o cept.o slope.o $(BMOBJS) -o $@ $(LD_X11)
+$(TOOLS)/latitude_slope.exe: latitude_slope.o ns.o ctim.o isoflush.o tim.o cept.o slope.o $(BMOBJS)
+	$(LD) latitude_slope.o  ns.o ctim.o isoflush.o tim.o cept.o slope.o $(BMOBJS) -o $@ $(LD_X11)
 
 $(TOOLS)/inch_swg.exe: inch_swg.o
 	$(LD) inch_swg.o -o $@ $(LD_X11)
@@ -689,11 +689,11 @@ $(TOOLS)/tmp_calc.exe: tmp_calc.o
 $(TOOLS)/txnwin.exe: txnwin.o projector.o qcomm.o
 	$(LD) txnwin.o projector.o qcomm.o -o $@ $(LD_X11)
 
-$(TOOLS)/declination.exe: declination.o ctim.o isoflush.o tim.o $(BMOBJS)
-	$(LD) declination.o ctim.o isoflush.o tim.o $(BMOBJS) -o $@ $(LD_X11)
+$(TOOLS)/declination.exe: declination.o ns.o ctim.o isoflush.o tim.o $(BMOBJS)
+	$(LD) declination.o ns.o ctim.o isoflush.o tim.o $(BMOBJS) -o $@ $(LD_X11)
 
-$(TOOLS)/hour_angle_protractor.exe: hour_angle_protractor.o ctim.o isoflush.o tim.o $(BMOBJS)
-	$(LD) hour_angle_protractor.o ctim.o isoflush.o tim.o $(BMOBJS) -o $@ $(LD_X11)
+$(TOOLS)/hour_angle_protractor.exe: hour_angle_protractor.o ns.o ctim.o isoflush.o tim.o $(BMOBJS)
+	$(LD) hour_angle_protractor.o ns.o ctim.o isoflush.o tim.o $(BMOBJS) -o $@ $(LD_X11)
 
 $(TOOLS)/multiserv.exe: multiserv.o projector.o qcomm.o
 	$(LD) multiserv.o projector.o qcomm.o -o $@ $(LD_X11)
