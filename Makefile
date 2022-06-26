@@ -61,7 +61,7 @@ allxx: \
 $(XXSTATIX)/iostat.exe   $(XXSTATIX)/vmstat.exe    $(XXSTATIX)/netstat.exe $(XXSTATIX)/data_generator.exe \
 $(XXSTATIX)/iostatin.exe $(XXSTATIX)/vmstatin.exe  $(XXSTATIX)/netstatin.exe \
 $(XXSTATIX)/colmaps.exe  $(XXSTATIX)/iostatmon.exe $(XXSTATIX)/iowc.exe   $(XXSTATIX)/jiggler.exe \
-$(XXSTATIX)/test_butt.exe  $(XXSTATIX)/wintext.exe $(XXSTATIX)/equalcol_test.exe \
+$(XXSTATIX)/test_butt.exe  $(XXSTATIX)/wintext.exe $(XXSTATIX)/equalcol_test.exe $(XXSTATIX)/franco.exe \
 $(XXSTATIX)/topmon.exe   $(XXSTATIX)/dcv_butt.exe  $(XXSTATIX)/recsum.exe $(XXSTATIX)/summan.exe $(XXSTATIX)/dcv_state.exe
 
 allda: \
@@ -369,6 +369,9 @@ $(XXSTATIX)/XConsortium_test.exe: XConsortium_test.o
 
 $(XXSTATIX)/example.exe: example.o
 	$(CC) example.o -o $@ $(LD_X11)
+
+$(XXSTATIX)/franco.exe: franco.o
+	$(CC) franco.o -o $@ $(LD_X11)
 
 $(XXSTATIX)/svn_calib.exe: svn_calib.o isox11.o
 	$(LD) svn_calib.o isox11.o  -o $@ $(LD_X11)
