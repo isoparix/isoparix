@@ -994,6 +994,7 @@ if(event_msg)fprintf(isolog,"ISOX11.C: Next event from x11mouse is Expose %d \n"
                      *mousey=xev.xexpose.y;
                      *newx=xev.xexpose.width;
                      *newy=xev.xexpose.height;
+fprintf(isolog,"ISOX11.C: Expose %d Count %d \n",xev.type, xev.xexpose.count);
                   break;
                }
  
